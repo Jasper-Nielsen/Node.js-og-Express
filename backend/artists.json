@@ -1,0 +1,154 @@
+
+ [
+  {
+    "name": "John Lennon",
+    "birthdate": "1940-10-09",
+    "activeSince": "1957",
+    "genres": ["Rock", "Pop"],
+    "labels": ["Apple Records"],
+    "website": "https://www.johnlennon.com/",
+    "image": "https://example.com/john-lennon.jpg",
+    "shortDescription": "Legendary member of The Beatles."
+  },
+  {
+    "name": "Beyoncé Knowles",
+    "birthdate": "1981-09-04",
+    "activeSince": "1990s",
+    "genres": ["R&B", "Pop"],
+    "labels": ["Columbia Records"],
+    "website": "https://www.beyonce.com/",
+    "image": "https://example.com/beyonce.jpg",
+    "shortDescription": "Iconic singer and performer."
+  },
+  {
+    "name": "Bob Dylan",
+    "birthdate": "1941-05-24",
+    "activeSince": "1960",
+    "genres": ["Folk", "Rock"],
+    "labels": ["Columbia Records"],
+    "website": "https://www.bobdylan.com/",
+    "image": "https://example.com/bob-dylan.jpg",
+    "shortDescription": "Nobel laureate and folk-rock legend."
+  },
+  {
+    "name": "Adele",
+    "birthdate": "1988-05-05",
+    "activeSince": "2006",
+    "genres": ["Pop", "Soul"],
+    "labels": ["XL Recordings"],
+    "website": "https://www.adele.com/",
+    "image": "https://example.com/adele.jpg",
+    "shortDescription": "Powerful voice and soulful ballads."
+  },
+  {
+    "name": "Elton John",
+    "birthdate": "1947-03-25",
+    "activeSince": "1964",
+    "genres": ["Pop", "Rock"],
+    "labels": ["Rocket Records"],
+    "website": "https://www.eltonjohn.com/",
+    "image": "https://example.com/elton-john.jpg",
+    "shortDescription": "Piano virtuoso and pop sensation."
+  },
+  {
+    "name": "Miles Davis",
+    "birthdate": "1926-05-26",
+    "activeSince": "1944",
+    "genres": ["Jazz"],
+    "labels": ["Columbia Records"],
+    "website": "https://www.milesdavis.com/",
+    "image": "https://example.com/miles-davis.jpg",
+    "shortDescription": "Influential jazz trumpeter and composer."
+  },
+  {
+    "name": "Rihanna",
+    "birthdate": "1988-02-20",
+    "activeSince": "2003",
+    "genres": ["R&B", "Pop"],
+    "labels": ["Def Jam Recordings"],
+    "website": "https://www.rihannanow.com/",
+    "image": "https://example.com/rihanna.jpg",
+    "shortDescription": "Multi-talented singer, actress, and fashion icon."
+  },
+  {
+    "name": "David Bowie",
+    "birthdate": "1947-01-08",
+    "activeSince": "1962",
+    "genres": ["Rock", "Pop"],
+    "labels": ["RCA Records"],
+    "website": "https://www.davidbowie.com/",
+    "image": "https://example.com/david-bowie.jpg",
+    "shortDescription": "Innovative and iconic rock star."
+  },
+  {
+    "name": "Michael Jackson",
+    "birthdate": "1958-08-29",
+    "activeSince": "1964",
+    "genres": ["Pop", "R&B"],
+    "labels": ["Epic Records"],
+    "website": "https://www.michaeljackson.com/",
+    "image": "https://example.com/michael-jackson.jpg",
+    "shortDescription": "The King of Pop and global music sensation."
+  },
+  {
+    "name": "Johnny Cash",
+    "birthdate": "1932-02-26",
+    "activeSince": "1954",
+    "genres": ["Country", "Rock"],
+    "labels": ["Columbia Records"],
+    "website": "https://www.johnnycash.com/",
+    "image": "https://example.com/johnny-cash.jpg",
+    "shortDescription": "Legendary country and rockabilly singer."
+  },
+  {
+    "name": "Madonna",
+    "birthdate": "1958-08-16",
+    "activeSince": "1982",
+    "genres": ["Pop", "Dance"],
+    "labels": ["Warner Bros. Records"],
+    "website": "https://www.madonna.com/",
+    "image": "https://example.com/madonna.jpg",
+    "shortDescription": "Queen of Pop and cultural icon."
+  },
+  {
+    "name": "Prince",
+    "birthdate": "1958-06-07",
+    "activeSince": "1975",
+    "genres": ["Pop", "Funk"],
+    "labels": ["Warner Bros. Records"],
+    "website": "https://www.prince.com/",
+    "image": "https://example.com/prince.jpg",
+    "shortDescription": "Musical genius and style icon."
+  },
+  {
+    "name": "Ella Fitzgerald",
+    "birthdate": "1917-04-25",
+    "activeSince": "1934",
+    "genres": ["Jazz"],
+    "labels": ["Decca Records"],
+    "website": "https://www.ellafitzgerald.com/",
+    "image": "https://example.com/ella-fitzgerald.jpg",
+    "shortDescription": "First Lady of Song and jazz legend."
+  },
+  {
+    "name": "Stevie Wonder",
+    "birthdate": "1950-05-13",
+    "activeSince": "1961",
+    "genres": ["R&B", "Pop"],
+    "labels": ["Motown Records"],
+    "website": "https://www.steviewonder.net/",
+    "image": "https://example.com/stevie-wonder.jpg",
+    "shortDescription": "Blind musical prodigy and soul icon."
+  },
+  {
+    "name": "Frank Sinatra",
+    "birthdate": "1915-12-12",
+    "activeSince": "1935",
+    "genres": ["Jazz", "Pop"],
+    "labels": ["Capitol Records"],
+    "website": "https://www.sinatra.com/",
+    "image": "https://example.com/frank-sinatra.jpg",
+    "shortDescription": "Chairman of the Board and crooner extraordinaire."
+  }
+]
+ 
