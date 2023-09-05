@@ -28,7 +28,7 @@ async function createArtist(
   const newArtist = {
     name: name,
     image: image,
-    birthDate: birthdate,
+    birthdate: birthdate,
     activeSince: activeSince,
     genres: genres,
     labels: labels,
@@ -60,7 +60,7 @@ async function updateArtist(
   const artistToUpdate = {
     name: name,
     image: image,
-    birthDate: birthdate,
+    birthdate: birthdate,
     activeSince: activeSince,
     genres: genres,
     labels: labels,

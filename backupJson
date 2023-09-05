@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "hugo",
+    "name": "John Lennon",
     "birthdate": "1940-10-09",
     "activeSince": "1957-1958",
     "genres": ["Rock", "Pop"],
@@ -154,5 +154,16 @@
     "image": "https://example.com/eminem.jpg",
     "shortDescription": "Legendary rapper and lyricist.",
     "favorite": false
+  },
+  {
+    "name": "Sauron",
+    "image": "",
+    "birthDate": "",
+    "activeSince": "",
+    "genres": "",
+    "labels": "",
+    "website": "https://upload.wikimedia.org/wikipedia/en/thumb/3/3a/Sauron.jpg/290px-Sauron.jpg",
+    "shortDescription": "",
+    "id": 1693908347418
   }
 ]

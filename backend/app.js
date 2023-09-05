@@ -56,18 +56,18 @@ app.post("/artists", async (req, res) => {
 });
 
 app.put("/artists/:id", async (req, res) => {
-  const id = Number(request.params.id);
-  console.log(id);
+  const id = Number(req.params.id);
+  console.log(`ID: ${id}`);
 
   const data = await fs.readFile("artists.json");
   const artists = JSON.parse(data);
-  const artistToUpdate = artists.find((user) => user.id === id);
+  const artistToUpdate = artists.find((artist) => artist.id === id);
 
   if(!artistToUpdate){
     res.status(404).json({error: "Artist not found. use create instead"});
   }else {
-const body = request.body;
-console.log(body);
+const body = req.body;
+console.log(`body ${body}`);
 artistToUpdate.name = body.name;
 artistToUpdate.birthdate = body.birthdate;
 artistToUpdate.activeSince = body.activeSince;
@@ -78,18 +78,10 @@ artistToUpdate.image = body.image;
 artistToUpdate.shortDescription = body.shortDescription;
 
 fs.writeFile("artists.json", JSON.stringify(artists));
-response.json(artists);
+res.json(artists);
   }
   
-  /*"name": "John Lennon",
-    "birthdate": "1940-10-09",
-    "activeSince": "1957",
-    "genres": ["Rock", "Pop"],
-    "labels": ["Apple Records"],
-    "website": "https://www.johnlennon.com/",
-    "image": "https://example.com/john-lennon.jpg",
-    "shortDescription": "Legendary member of The Beatles." */
- 
+  
 });
 
 app.patch("/artists:id", async (req,res) => {
@@ -144,14 +136,16 @@ app.delete("/artists/:id", async (req, res) => {
     const data = await fs.readFile("artists.json");
     const artists = JSON.parse(data);
 
-    const newArtists = artists.filter((artist) => artist.id === id);
+    const newArtists = artists.filter(artist => artist.id !== id);
 
-    if(!newArtists){
-        res.status(404).json({error: "can't delete artist as it is not in the database"});
-    }else{
-fs.writeFile("artist.json", JSON.stringify(newArtists));
-res.json(artists);
-    }
+    await fs.writeFile("artists.json", JSON.stringify(newArtists));
+
+    res.json(newArtists);
+    // if(!newArtists){
+    //     res.status(404).json({error: "can't delete artist as it is not in the database"});
+    // }else{
+
+    // }
     
 })
 

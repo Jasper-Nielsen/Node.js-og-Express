@@ -72,16 +72,13 @@ function updateClicked(artistObject) {
   //Feedback to the user
 
   updateForm.name.value = artistObject.name;
-  updateForm.image.value = artistObject.image; //sets value of the form title to that of the object.
+  updateForm.image.value = artistObject.image; 
   updateForm.birthdate.value = artistObject.birthdate;
   updateForm.activeSince.value = artistObject.activeSince;
   updateForm.genres.value = artistObject.genres;
   updateForm.labels.value = artistObject.labels;
   updateForm.website.value = artistObject.website;
   updateForm.shortDescription.value = artistObject.shortDescription;
-
-
-
 
   //sets the id of the form to the id for the specific object
   updateForm.setAttribute("data-id", artistObject.id);
@@ -143,13 +140,13 @@ async function createArtistClicked(event) {
 
   const response = await createArtist(
     name,
+    image,
     birthdate,
     activeSince,
     genres,
     labels,
     website,
-    image,
-    shortDescription,
+    shortDescription
     // favorite
   );
   if (response.ok) {
@@ -169,30 +166,29 @@ async function updateArtistClicked(event) {
   const form = document.querySelector("#form-update-artist");
   // extract the values from inputs in the form
   const name = form.name.value;
-  const race = form.race.value;
-  const image = form.image.value;
-  const birth = form.birth.value;
-  const culture = form.culture.value;
-  const death = form.death.value;
-  const gender = form.gender.value;
-  const realm = form.realm.value;
-  const title = form.title.value;
-  const weapon = form.weapon.value;
+  const image= form.image.value;
+  const birthdate = form.birthdate.value;
+  const activeSince = form.activeSince.value;
+  const genres = form.genres.value;
+  const labels = form.labels.value;
+  const website = form.website.value;
+  const shortDescription = form.shortDescription.value;
+  
   //gets the id of the post
   const id = form.getAttribute("data-id");
+
+
 
   const response = await updateArtist(
     id,
     name,
-    race,
     image,
-    birth,
-    culture,
-    death,
-    gender,
-    realm,
-    title,
-    weapon
+    birthdate,
+    activeSince,
+    genres,
+    labels,
+    website,
+    shortDescription
   ); //match the parameters in updatepost!!!
   if (response.ok) {
     document.querySelector("#dialog-update-artist").close();
@@ -205,18 +201,21 @@ async function updateArtistClicked(event) {
   }
 }
 
-function deleteArtistClicked(artistObject) {
-  console.log(artistObject);
-  document.querySelector("#dialog-delete-artist-title").textContent =
-    artistObject.name;
-  document.querySelector("#dialog-delete-artist").showModal();
-  document
-    .querySelector("#form-delete-artist")
-    .addEventListener("submit", () => deleteArtistConfirm(artistObject));
-  document
-    .querySelector("#cancelDelete")
-    .addEventListener("click", (event) => canceldeleteArtist(event));
-}
+// function deleteArtistClicked(artistObject) {
+
+//   console.log(artistObject);
+//   document.querySelector("#dialog-delete-artist-title").textContent =
+//     artistObject.name;
+
+//     // console.log()
+//   document.querySelector("#dialog-delete-artist").showModal();
+//   document
+//     .querySelector("#form-delete-artist")
+//     .addEventListener("submit", () => deleteArtistConfirm(artistObject));
+//   document
+//     .querySelector("#cancelDelete")
+//     .addEventListener("click", (event) => canceldeleteArtist(event));
+// }
 
 function canceldeleteArtist(event) {
   event.preventDefault();
@@ -235,17 +234,13 @@ async function deleteArtistConfirm(artistObject) {
 }
 
 function showDeleteFeedback() {
-  const dialog = document.getElementById("dialog-delete-feedback");
-  const dialogMessage = document.getElementById(
-    "dialog-delete-feedback-message"
-  );
-  dialogMessage.textContent;
-  dialog.showModal();
-  setTimeout(closeDialog, 1000);
+  const dialog = document.querySelector("dialog-delete-feedback");
 
-  function closeDialog() {
-    dialog.close();
-  }
+  document.querySelector("dialog-delete-feedback-message").textContent;
+
+  dialog.showModal();
+
+  setTimeout(dialog.close, 1000);
 }
 
 function showCreateArtistDialog() {
@@ -292,17 +287,15 @@ function showartist(artistObject) {
 
   document.querySelector("#artists").insertAdjacentHTML("beforeend", html);
 
-  const gridItem = document.querySelector(
-    "#artists article:last-child .clickable"
-  );
-
-  gridItem.addEventListener("click", () => {
-    showartistModal(artistObject);
-  });
+  document
+    .querySelector("#artists article:last-child .clickable")
+    .addEventListener("click", () => {
+      showartistModal(artistObject);
+    });
 
   document
     .querySelector("#artists article:last-child .btn-delete")
-    .addEventListener("click", () => deleteArtistClicked(artistObject));
+    .addEventListener("click", () => deleteArtistConfirm(artistObject));
   document
     .querySelector("#artists article:last-child .btn-update")
     .addEventListener("click", () => updateClicked(artistObject));
@@ -312,13 +305,13 @@ function showartistModal(artistObject) {
   const modal = document.querySelector("#artist-modal");
   modal.querySelector("#artist-image").src = artistObject.image;
   modal.querySelector("#artist-name").textContent = artistObject.name;
-  modal.querySelector("#artist-birth").textContent = artistObject.activeSince;
-  modal.querySelector("#artist-culture").textContent = artistObject.genres;
-  modal.querySelector("#artist-death").textContent = artistObject.labels;
-  modal.querySelector("#artist-gender").textContent = artistObject.website;
-  modal.querySelector("#artist-race").textContent =
+  modal.querySelector("#artist-active-since").textContent = artistObject.activeSince;
+  modal.querySelector("#artist-genres").textContent = artistObject.genres;
+  modal.querySelector("#artist-labels").textContent = artistObject.labels;
+  modal.querySelector("#artist-website").textContent = artistObject.website;
+  modal.querySelector("#artist-description").textContent =
     artistObject.shortDescription;
-  modal.querySelector("#artist-realm").textContent = artistObject.favorite;
+  // modal.querySelector("#artist-realm").textContent = artistObject.favorite;
   modal.showModal();
   modal.querySelector("button").addEventListener("click", () => {
     modal.close();
