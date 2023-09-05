@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="images/ring.jpg" type="image/x-icon">
-    <link rel="stylesheet" href="style.css" />
-    <title>LOTR</title>
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+    <link rel="stylesheet" href="/frontend/app.css" />
+    <title>Artists CRUD App</title>
   </head>
   <body>
     <header>
-      <h3>The Lord of the Rings App</h3>        
+      <h3>Artists CRUD App</h3>        
       <button id="btn-create-artist">Create artist</button>
       <form id="searchbyname">
         <input type="search" id="input-search" placeholder="Search by name">
@@ -22,57 +22,39 @@
           <form id="sortby" name="sortby">
             <select name="sortbyselect" id="sortbyselect">
               <option value="name">Name</option>
-              <option value="birthdate">Birthdate</option>
-              <option value="name">Name</option>
-              <option value="birthdate">Birthdate</option>
-              <option value="name">Name</option>
-              <option value="birthdate">Birthdate</option>
+              <option value="birthDate">Birth date</option>
+              <option value="website">Website</option>
             </select>
           </form>
         </label>
-
-        "id": 11,
-    "name": "Jimi Hendrix",
-    "birthdate": "1942-11-27",
-    "activeSince": "1963-1970",
-    "genres": ["Rock", "Blues"],
-    "labels": ["Experience Hendrix", "Polydor Records"],
-    "website": "https://www.jimihendrix.com/",
-    "image": "https://example.com/jimi-hendrix.jpg",
-    "shortDescription": "Guitar virtuoso and innovator.",
-    "favorite": false
 
         <label for="filterby">Filter by:
            <form id="filterby" name="filterby">
             <select>
               <option value="filterall">All</option>
-              <option value="ainur">Ainur</option>
-              <option value="dwarf">Dwarves</option>
-              <option value="elf">Elves</option>
-              <option value="hobbit">Hobbits</option>
-              <option value="men">Men</option>
-              <option value="orc">Orcs</option>
+              <option value="pop">Pop</option>
+              <option value="hiphop">Hip Hop</option>
+              <option value="r&b">R&B</option>
+              <option value="dance">Dance</option>
             </select>
           </form>
         </label>
-
       </div>
 
-        <h2>artists</h2>
+        <h2>Artists</h2>
         <section id="artists" class="grid-container"></section>
 </main>
 
 <dialog id="artist-modal">
   <img id="artist-image" src="">
   <h3 id="artist-name"></h3>
-  <p>Birth: <span id="artist-birth"></span></p>
-  <p>Culture: <span id="artist-culture"></span></p>
-  <p>Death: <span id="artist-death"></span></p>
-  <p>Gender: <span id="artist-gender"></span></p>
-  <p>Race: <span id="artist-race"></span></p>
-  <p>Realm: <span id="artist-realm"></span></p>
-  <p>Title: <span id="artist-title"></span></p>
-  <p>Weapon: <span id="artist-weapon"></span></p>
+  <p>Birth Date: <span id="artist-birth"></span></p>
+  <p>Active Since: <span id="artist-active-since"></span></p>
+  <p>Genres: <span id="artist-genres"></span></p>
+  <p>Labels: <span id="artist-labels"></span></p>
+  <p>Website: <span id="artist-website"></span></p>
+  <p>Short Description: <span id="artist-description"></span></p>
+
   <form method="dialog">
     <button>Close</button>
   </form>
@@ -83,45 +65,28 @@
       <h2 class="create-dialog-head">Create new artist</h2>
       <form id="form-create-artist" method="dialog" class="create-dialog-form">
         <label for="name">Name
-          <input type="text" name="name" id="artistName" placeholder="Input artist's name" size="50" required/>
+          <input type="text" name="name" id="artist-name" placeholder="Input artist's name" size="50" required/>
         </label>
 
         <label for="image">Image <input type="url" name="image" id="image"placeholder="Input artist's image" size="50" required/>
         </label>
 
-        <label for="birth">Year of Birth <input type="text" name="birth" id="birth" placeholder="Input artist's year of birth" size="50"/>
+        <label for="birthDate">Date of Birth <input type="text" name="birthDate" id="birthDate" placeholder="Input artist's date of birth" size="50"/>
         </label>
 
-        <label for="culture">Culture <input type="text" name="culture" id="culture" placeholder="Input artist's culture" size="50"/>
+        <label for="activeSince">Active Since <input type="text" name="activeSince" id="activeSince" placeholder="Input artist's active since" size="50"/>
         </label>
 
-        <label for="death">Date of Death <input type="text" name="death" id="death" placeholder="Input artist's year of death" size="50"/>
+        <label for="genres">Genres <input type="text" name="genres" id="genres" placeholder="Input artist's genres" size="50"/>
         </label>
 
-        <label for="race">Race</label>
-        <select name="race"id="race">
-          <option value="elf">Elf</option>
-          <option value="men">Human</option>
-          <option value="orc">Orcs</option>
-          <option value="dwarf">Dwarves</option>
-          <option value="hobbit">Hobbit</option>
-        </select>
-
-        <label for="gender">Gender</label>
-        <select name="gender" id="gender">
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select><br>
-
-
-        <label for="realm">Realm <input type="text" name="realm" id="realm" placeholder="Input artist's Realm of residence" size="50"/>
+        <label for="labels">Labels <input type="text" name="labels" id="labels" placeholder="Input artist's labels" size="50"/>
         </label>
 
-        <label for="title">Title <input type="text" name="title" id="title" placeholder="Input artist's title" size="50"/>
+        <label for="website">Website <input type="text" name="website" id="website" placeholder="Input artist's website" size="50"/>
         </label>
 
-        <label for="weapon">Weapon <input type="text" name="weapon" id="weapon" placeholder="Input artist's weapon" size="50"/>
+        <label for="shortDescription">Short Description <input type="text" name="shortDescription" id="shortDescription" placeholder="Input artist's description" size="50"/>
         </label>
 
         <button class="btn-cancel">Close</button>
@@ -133,7 +98,7 @@
 
                 <!-- dialog - delete post -->
   <dialog id="dialog-delete-artist">
-        <h2>Do you want to delete a artist?</h2>
+        <h2>Do you want to delete an artist?</h2>
         <p id="dialog-delete-artist-title">Name of the artist</p>
         <form method="dialog" id="form-delete-artist">
         <button type="button" class="btn-cancel" id="cancelDelete">No</button>
@@ -142,7 +107,7 @@
     </dialog>
 
   <dialog id="dialog-delete-feedback">
-    <p id="dialog-delete-feedback-message">artist is deleted</p>
+    <p id="dialog-delete-feedback-message">Artist is deleted</p>
   </dialog>
 
   <dialog id="dialog-update-artist">
@@ -154,39 +119,23 @@
         <label for="image">Image</label>
         <input type="url" name="image" />
 
-        <label for="birth">Birth Year</label>
-        <input type="text" name="birth" />
+        <label for="birthDate">Date of Birth</label>
+        <input type="text" name="birthDate" />
 
-        <label for="culture">Culture</label>
-        <input type="text" name="culture" />
+        <label for="activeSince">Active Since</label>
+        <input type="text" name="activeSince" />
 
-        <label for="death">Death</label>
-        <input type="text" name="death" />
+        <label for="genres">Genres</label>
+        <input type="text" name="genres" />
 
-        <label for="race">Race</label>
-        <select name="race">
-          <option value="elf">Elf</option>
-          <option value="men">Human</option>
-          <option value="orc">Orcs</option>
-          <option value="dwarf">Dwarves</option>
-          <option value="hobbit">Hobbit</option>
-        </select>
+        <label for="labels">Labels</label>
+        <input type="text" name="labels" />
 
-        <label for="gender">Gender</label>
-        <select name="gender">
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select><br>
+        <label for="website">Website</label>
+        <input type="text" name="website" />
 
-        <label for="realm">Realm</label>
-        <input type="text" name="realm" />
-
-        <label for="title">Title</label>
-        <input type="text" name="title" />
-
-        <label for="weapon">Weapon</label>
-        <input type="text" name="weapon" />
+        <label for="shortDescription">Short Description</label>
+        <input type="text" name="shortDescription" />
 
         <button class="btn-cancel">Close</button>
         <button>Update</button>
@@ -194,10 +143,10 @@
     </dialog>
 
     <dialog id="dialog-failed-to-update">
-      <p>artist Update Failed</p>
+      <p>Artist Update Failed</p>
       <button class="btn-cancel">Close</button>
     </dialog>
 
-    <script src="frontend/"type="module"></script>
+    <script src="/frontend/script.js"type="module"></script>
   </body>
 </html>
