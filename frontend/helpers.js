@@ -1,29 +1,33 @@
-import { characterList } from "./script.js";
+import { artistList } from "./script.js";
 
+
+// why not just write artistList.lowerCase.includes(searchvalue)
 function searchByName(searchValue) {
   searchValue = searchValue.toLowerCase().trim();
-  return characterList.filter(checkNames);
+  return artistList.filter(
+    (char) => char.name.toLowerCase() === searchValue
+  );
 
-  function checkNames(character) {
-    return character.name.toLowerCase().includes(searchValue);
-  }
+  // function checkNames(character) {
+  //   return character.name.toLowerCase().includes(searchValue);
+  // }
 }
 
 function sortByOption(sortValue) {
   if (sortValue === "name") {
-    return characterList.sort((a, b) => a.name.localeCompare(b.name));
+    return artistList.sort((a, b) => a.name.localeCompare(b.name));
   } else if (sortValue === "title") {
-    return characterList.sort((a, b) => a.title.localeCompare(b.title));
+    return artistList.sort((a, b) => a.title.localeCompare(b.title));
   } else if (sortValue === "race") {
-    return characterList.sort((a, b) => a.race.localeCompare(b.race));
+    return artistList.sort((a, b) => a.race.localeCompare(b.race));
   }
 }
 
 function filterByRace(inputValue) {
   inputValue = inputValue.toLowerCase();
   if (inputValue !== "filterall") {
-    let filteredList = characterList.filter((character) =>
-      character.race.toLowerCase().includes(inputValue)
+    let filteredList = artistList.filter((artist) =>
+      artist.inputValue.toLowerCase().includes(inputValue)
     );
     if (filteredList.length !== 0) {
       return filteredList;
@@ -31,7 +35,7 @@ function filterByRace(inputValue) {
       return (filteredList = []);
     }
   } else {
-    return characterList;
+    return artistList;
   }
 }
 

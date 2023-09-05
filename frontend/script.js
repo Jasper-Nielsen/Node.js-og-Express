@@ -72,15 +72,16 @@ function updateClicked(artistObject) {
   //Feedback to the user
 
   updateForm.name.value = artistObject.name;
-  updateForm.race.value = artistObject.race; //sets value of the form title to that of the object.
-  updateForm.image.value = artistObject.image;
-  updateForm.birth.value = artistObject.birth;
-  updateForm.culture.value = artistObject.culture;
-  updateForm.death.value = artistObject.death;
-  updateForm.gender.value = artistObject.gender;
-  updateForm.realm.value = artistObject.realm;
-  updateForm.title.value = artistObject.title;
-  updateForm.weapon.value = artistObject.weapon;
+  updateForm.race.value = artistObject.birthdate; //sets value of the form title to that of the object.
+  updateForm.image.value = artistObject.activeSince;
+  updateForm.birth.value = artistObject.genres;
+  updateForm.culture.value = artistObject.labels;
+  updateForm.death.value = artistObject.website;
+  updateForm.gender.value = artistObject.image;
+  updateForm.realm.value = artistObject.shortDescription;
+  updateForm.title.value = artistObject.favorite;
+ 
+
 
   //sets the id of the form to the id for the specific object
   updateForm.setAttribute("data-id", artistObject.id);
@@ -96,28 +97,29 @@ async function createArtistClicked(event) {
   event.preventDefault();
   const form = document.querySelector("#form-create-artist");
   const name = form.name.value;
-  const race = form.race.value;
-  const image = form.image.value;
-  const birth = form.birth.value;
-  const culture = form.culture.value;
-  const death = form.death.value;
-  const gender = form.gender.value;
-  const realm = form.realm.value;
-  const title = form.title.value;
-  const weapon = form.weapon.value;
+  const race = form.birthdate.value;
+  const image = form.activeSince.value;
+  const birth = form.genres.value;
+  const culture = form.labels.value;
+  const death = form.website.value;
+  const gender = form.image.value;
+  const realm = form.shortDescription.value;
+  const title = form.favorite.value;
+  
+
+
 
   const response = await createArtist(
     name,
-    race,
+    birthdate,
+    activeSince,
+    genres,
+    labels,
+    website,
     image,
-    birth,
-    culture,
-    death,
-    gender,
-    realm,
-    title,
-    weapon
-  );
+    shortDescription,
+    favorite,
+      );
   if (response.ok) {
     document.querySelector("#dialog-create-artist").close();
     updateArtistsGrid();
@@ -146,7 +148,16 @@ async function updateArtistClicked(event) {
   const weapon = form.weapon.value;
   //gets the id of the post
   const id = form.getAttribute("data-id");
-
+  // "id": 11,
+  //   "name": "Jimi Hendrix",
+  //   "birthdate": "1942-11-27",
+  //   "activeSince": "1963-1970",
+  //   "genres": ["Rock", "Blues"],
+  //   "labels": ["Experience Hendrix", "Polydor Records"],
+  //   "website": "https://www.jimihendrix.com/",
+  //   "image": "https://example.com/jimi-hendrix.jpg",
+  //   "shortDescription": "Guitar virtuoso and innovator.",
+  //   "favorite": false
   //puts in data from from passes it to updateArtist
 
   const response = await updateArtist(
