@@ -3,37 +3,44 @@ import { prepareData } from "./helpers.js";
 // const endpoint =
 //   "https://lotr-crud-default-rtdb.europe-west1.firebasedatabase.app/";
 
+const endpoint = "http://localhost:3000";
+
+const headers =  { "Content-Type": "application/json"};
+
 async function getArtists() {
-  const response = await fetch(`${endpoint}/artists.json`);
+  const response = await fetch(`${endpoint}/artists`);
   const data = await response.json();
   return prepareData(data);
 }
 
+
+
 async function createArtist(
   name,
-  birthDate,
+  image,
+  birthdate,
   activeSince,
   genres,
   labels,
   website,
-  image,
   shortDescription,
 ) {
   const newArtist = {
     name: name,
-    birthDate: birthDate,
+    image: image,
+    birthDate: birthdate,
     activeSince: activeSince,
     genres: genres,
     labels: labels,
     website: website,
-    image: image,
     shortDescription: shortDescription,
   };
   
   const json = JSON.stringify(newArtist);
-  const response = await fetch(`${endpoint}/artists.json`, {
+  const response = await fetch(`${endpoint}/artists`, {
     method: "POST",
     body: json,
+    headers: headers,
   });
   return response;
 }
@@ -42,38 +49,38 @@ async function createArtist(
 async function updateArtist(
   id,
   name,
-  birthDate,
+  image,
+  birthdate,
   activeSince,
   genres,
   labels,
   website,
-  image,
   shortDescription
 ) {
-  
   const artistToUpdate = {
     name: name,
-    birthDate: birthDate,
+    image: image,
+    birthDate: birthdate,
     activeSince: activeSince,
     genres: genres,
     labels: labels,
     website: website,
-    image: image,
     shortDescription: shortDescription,
   };
   // Converts the JS object to JSON string
   const json = JSON.stringify(artistToUpdate);
   // PUT fetch request with JSON in the body. Calls the specific element in resource
-  const response = await fetch(`${endpoint}/artists/${id}.json`, {
+  const response = await fetch(`${endpoint}/artists/${id}`, {
     method: "PUT",
     body: json,
+    headers: headers,
   });
   return response;
 }
 
-async function deleteCharacter(artistObject) {
+async function deleteArtist(artistObject) {
   const id = artistObject.id;
-  const response = await fetch(`${endpoint}/artists/${id}.json`, {
+  const response = await fetch(`${endpoint}/artists/${id}`, {
     method: "DELETE",
   });
   return response;

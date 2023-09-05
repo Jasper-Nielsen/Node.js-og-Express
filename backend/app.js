@@ -36,7 +36,7 @@ app.get("/artists/:id", async (req, res) => {
 
 app.post("/artists", async (req, res) => {
   const newMusician = req.body;
-  newMusician.id = new Date.getTime();
+  newMusician.id = new Date().getTime();
 
   const data = await fs.readFile("artists.json");
   const artists = JSON.parse(data);
@@ -47,7 +47,7 @@ app.post("/artists", async (req, res) => {
     
   }else{
    artists.push(newMusician);
-    fs.writeFile("artists.json", JSON.stringify(artists));
+   await  fs.writeFile("artists.json", JSON.stringify(artists));
     res.json(artists);
   }
   

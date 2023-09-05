@@ -72,15 +72,15 @@ function updateClicked(artistObject) {
   //Feedback to the user
 
   updateForm.name.value = artistObject.name;
-  updateForm.race.value = artistObject.birthdate; //sets value of the form title to that of the object.
-  updateForm.image.value = artistObject.activeSince;
-  updateForm.birth.value = artistObject.genres;
-  updateForm.culture.value = artistObject.labels;
-  updateForm.death.value = artistObject.website;
-  updateForm.gender.value = artistObject.image;
-  updateForm.realm.value = artistObject.shortDescription;
-  updateForm.title.value = artistObject.favorite;
- 
+  updateForm.image.value = artistObject.image; //sets value of the form title to that of the object.
+  updateForm.birthdate.value = artistObject.birthdate;
+  updateForm.activeSince.value = artistObject.activeSince;
+  updateForm.genres.value = artistObject.genres;
+  updateForm.labels.value = artistObject.labels;
+  updateForm.website.value = artistObject.website;
+  updateForm.shortDescription.value = artistObject.shortDescription;
+
+
 
 
   //sets the id of the form to the id for the specific object
@@ -97,17 +97,49 @@ async function createArtistClicked(event) {
   event.preventDefault();
   const form = document.querySelector("#form-create-artist");
   const name = form.name.value;
-  const race = form.birthdate.value;
-  const image = form.activeSince.value;
-  const birth = form.genres.value;
-  const culture = form.labels.value;
-  const death = form.website.value;
-  const gender = form.image.value;
-  const realm = form.shortDescription.value;
-  const title = form.favorite.value;
-  
+  const image = form.image.value;
+  const birthdate = form.birthdate.value;
+  const activeSince = form.activeSince.value;
+  const genres = form.genres.value;
+  const labels = form.labels.value;
+  const website = form.website.value;
+  const shortDescription = form.shortDescription.value;
+  // const favorite = form.favorite.value;
+  /* <label for="name">Name
+          <input type="text" name="name" id="artist-name" placeholder="Input artist's name" size="50" required/>
+        </label>
 
+        <label for="image">Image <input type="url" name="image" id="image"placeholder="Input artist's image" size="50" required/>
+        </label>
 
+        <label for="birthDate">Date of Birth <input type="text" name="birthDate" id="birthDate" placeholder="Input artist's date of birth" size="50"/>
+        </label>
+
+        <label for="activeSince">Active Since <input type="text" name="activeSince" id="activeSince" placeholder="Input artist's active since" size="50"/>
+        </label>
+
+        <label for="genres">Genres <input type="text" name="genres" id="genres" placeholder="Input artist's genres" size="50"/>
+        </label>
+
+        <label for="labels">Labels <input type="text" name="labels" id="labels" placeholder="Input artist's labels" size="50"/>
+        </label>
+
+        <label for="website">Website <input type="text" name="website" id="website" placeholder="Input artist's website" size="50"/>
+        </label>
+
+        <label for="shortDescription">Short Description <input type="text" name="shortDescription" id="shortDescription" placeholder="Input artist's description" size="50"/>
+        </label>/
+  /*
+  "id": 10,
+    "name": "David Bowie",
+    "birthdate": "1947-01-08",
+    "activeSince": "1962-2016",
+    "genres": ["Rock", "Experimental"],
+    "labels": ["RCA Records", "Columbia Records"],
+    "website": "https://www.davidbowie.com/",
+    "image": "https://example.com/david-bowie.jpg",
+    "shortDescription": "Chameleon-like rock legend.",
+    "favorite": false */
 
   const response = await createArtist(
     name,
@@ -118,8 +150,8 @@ async function createArtistClicked(event) {
     website,
     image,
     shortDescription,
-    favorite,
-      );
+    // favorite
+  );
   if (response.ok) {
     document.querySelector("#dialog-create-artist").close();
     updateArtistsGrid();
@@ -148,17 +180,6 @@ async function updateArtistClicked(event) {
   const weapon = form.weapon.value;
   //gets the id of the post
   const id = form.getAttribute("data-id");
-  // "id": 11,
-  //   "name": "Jimi Hendrix",
-  //   "birthdate": "1942-11-27",
-  //   "activeSince": "1963-1970",
-  //   "genres": ["Rock", "Blues"],
-  //   "labels": ["Experience Hendrix", "Polydor Records"],
-  //   "website": "https://www.jimihendrix.com/",
-  //   "image": "https://example.com/jimi-hendrix.jpg",
-  //   "shortDescription": "Guitar virtuoso and innovator.",
-  //   "favorite": false
-  //puts in data from from passes it to updateArtist
 
   const response = await updateArtist(
     id,
@@ -259,16 +280,16 @@ function showartist(artistObject) {
         <div class="clickable">    
             <img src="${artistObject.image}" />
             <h3><b>${artistObject.name}</b></h3>
-            <p>Weapon: ${artistObject.weapon}</p>
-            <p>Race: ${artistObject.race}</p>
-            <p>Title: ${artistObject.title}</p>
+            <p>${artistObject.shortDescription}</p>
         </div>
             <div class="btns">
                 <button class="btn-delete">Delete</button>
                 <button class="btn-update">Update</button>
+                
             </div>
         </article>
     `;
+
   document.querySelector("#artists").insertAdjacentHTML("beforeend", html);
 
   const gridItem = document.querySelector(
@@ -291,20 +312,29 @@ function showartistModal(artistObject) {
   const modal = document.querySelector("#artist-modal");
   modal.querySelector("#artist-image").src = artistObject.image;
   modal.querySelector("#artist-name").textContent = artistObject.name;
-  modal.querySelector("#artist-birth").textContent = artistObject.birth;
-  modal.querySelector("#artist-culture").textContent =
-    artistObject.culture;
-  modal.querySelector("#artist-death").textContent = artistObject.death;
-  modal.querySelector("#artist-gender").textContent = artistObject.gender;
-  modal.querySelector("#artist-race").textContent = artistObject.race;
-  modal.querySelector("#artist-realm").textContent = artistObject.realm;
-  modal.querySelector("#artist-title").textContent = artistObject.title;
-  modal.querySelector("#artist-weapon").textContent = artistObject.weapon;
+  modal.querySelector("#artist-birth").textContent = artistObject.activeSince;
+  modal.querySelector("#artist-culture").textContent = artistObject.genres;
+  modal.querySelector("#artist-death").textContent = artistObject.labels;
+  modal.querySelector("#artist-gender").textContent = artistObject.website;
+  modal.querySelector("#artist-race").textContent =
+    artistObject.shortDescription;
+  modal.querySelector("#artist-realm").textContent = artistObject.favorite;
   modal.showModal();
   modal.querySelector("button").addEventListener("click", () => {
     modal.close();
   });
 }
+// "id": 11,
+//   "name": "Jimi Hendrix",
+//   "birthdate": "1942-11-27",
+//   "activeSince": "1963-1970",
+//   "genres": ["Rock", "Blues"],
+//   "labels": ["Experience Hendrix", "Polydor Records"],
+//   "website": "https://www.jimihendrix.com/",
+//   "image": "https://example.com/jimi-hendrix.jpg",
+//   "shortDescription": "Guitar virtuoso and innovator.",
+//   "favorite": false
+//puts in data from from passes it to updateArtist
 
 function showErrorMessage(message) {
   document.querySelector(".error-message").textContent = message;
