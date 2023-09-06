@@ -190,12 +190,12 @@ async function deleteArtistConfirm(artistObject) {
 
   console.log(`delete clicked`);
   if (response.ok) {
-    updateArtistsGrid();
-    console.log("deleter")
+    await updateArtistsGrid();
+    console.log("deleter");
     // showDeleteFeedback();
   } else {
     document.querySelector("#dialog-failed-to-update").showModal();
-    console.log("fejl")
+    console.log("fejl");
   }
 }
 
@@ -216,6 +216,7 @@ function showCreateArtistDialog() {
 
 async function updateArtistsGrid() {
   artistList = await getArtists();
+  console.log(artistList);
   showArtists(artistList);
 }
 
@@ -273,14 +274,13 @@ function showartist(artistObject) {
 }
 
 async function toggleFavoriteArtist(artistObject) {
- const response = await patchArtist(artistObject.id);
+  const response = await patchArtist(artistObject.id);
 
- if(response.ok){
-  updateArtistsGrid();
- } else{
-  console.log(response.status, response.statusText);
- }
-
+  if (response.ok) {
+    updateArtistsGrid();
+  } else {
+    console.log(response.status, response.statusText);
+  }
 }
 
 function showartistModal(artistObject) {

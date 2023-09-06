@@ -50,15 +50,5 @@ function filter(inputValue) {
   }
 }
 
-function prepareData(dataObject) {
-  const characterArray = [];
-  for (const key in dataObject) {
-    const characterObject = dataObject[key];
-    characterObject.id = key;
-    characterArray.push(characterObject);
-  }
-  console.log(characterArray);
-  return characterArray;
-}
 
-export { prepareData, filter, sortByOption, searchByName };
+export { filter, sortByOption, searchByName };

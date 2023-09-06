@@ -1,19 +1,15 @@
-import { prepareData } from "./helpers.js";
-
 // const endpoint =
 //   "https://lotr-crud-default-rtdb.europe-west1.firebasedatabase.app/";
 
 const endpoint = "http://localhost:3000";
 
-const headers =  { "Content-Type": "application/json"};
+const headers = { "Content-Type": "application/json" };
 
 async function getArtists() {
   const response = await fetch(`${endpoint}/artists`);
   const data = await response.json();
-  return prepareData(data);
+  return data;
 }
-
-
 
 async function createArtist(
   name,
@@ -23,7 +19,7 @@ async function createArtist(
   genres,
   labels,
   website,
-  shortDescription,
+  shortDescription
 ) {
   const newArtist = {
     name: name,
@@ -35,7 +31,7 @@ async function createArtist(
     website: website,
     shortDescription: shortDescription,
   };
-  
+
   const json = JSON.stringify(newArtist);
   const response = await fetch(`${endpoint}/artists`, {
     method: "POST",
@@ -44,7 +40,6 @@ async function createArtist(
   });
   return response;
 }
-
 
 async function updateArtist(
   id,
@@ -78,7 +73,7 @@ async function updateArtist(
   return response;
 }
 
-async function patchArtist(id){
+async function patchArtist(id) {
   const response = await fetch(`${endpoint}/artists/${id}`, {
     method: "PATCH",
   });
@@ -88,11 +83,12 @@ async function patchArtist(id){
 async function deleteArtist(artistObject) {
   const id = artistObject.id;
 
-  console.log(`artist ID : ${id}`)
+  console.log(`artist ID : ${id}`);
   const response = await fetch(`${endpoint}/artists/${id}`, {
     method: "DELETE",
   });
   console.log(`response ${response}`);
+  console.log(response);
   return response;
 }
 
