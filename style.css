@@ -1,8 +1,11 @@
 /* ---------- root variables ---------- */
 :root {
+    --ligtcoral: rgb(240,128,128);
+    --gold: rgb(255,215,0);
+    --crimson: rgb(220,20,60);
     --green: rgb(38, 76, 89);
     --green-opacity: rgba(38, 76, 89, 0.2);
-    --light-green: rgb(94, 23, 87);
+    --light-green: rgb(100, 185, 85);
     --light-grey: #f1f1f4;
     --text-color-light: #f1f1f1;
     --text-color-dark: #333;
@@ -167,7 +170,7 @@ button {
     cursor: pointer;
     border: none;
     border-radius: 0;
-    color: var(--text-color-light);
+    color: var(--text-color-dark);
     background-color: var(--green);
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -175,6 +178,39 @@ button {
     width: 100%;
     max-width: 380px;
 }
+
+#btn-create-artist{
+    margin-top: 3vh;
+    height: 9vh;
+    background-color: var(--light-green);
+}
+
+.btn-delete{
+    background-color: var(--crimson);
+}
+
+.btn-update{
+background-color: var(--light-green);
+}
+
+.btn-favorite{
+    background-color: var(--gold);
+
+}
+
+.btn-cancel{
+    background-color: var(--ligtcoral);
+}
+
+#cancelDelete{
+    background-color: var(--light-green);
+}
+
+#confirmDelete{
+    background-color: var(--crimson);
+}
+
+
 
 input, select {
     margin: 1em auto;

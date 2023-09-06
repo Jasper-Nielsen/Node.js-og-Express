@@ -166,21 +166,21 @@ async function updateArtistClicked(event) {
   }
 }
 
-// function deleteArtistClicked(artistObject) {
+function deleteArtistClicked(artistObject) {
 
-//   console.log(artistObject);
-//   document.querySelector("#dialog-delete-artist-title").textContent =
-//     artistObject.name;
+  console.log(artistObject);
+  document.querySelector("#dialog-delete-artist-title").textContent =
+    artistObject.name;
 
-//     // console.log()
-//   document.querySelector("#dialog-delete-artist").showModal();
-//   document
-//     .querySelector("#form-delete-artist")
-//     .addEventListener("submit", () => deleteArtistConfirm(artistObject));
-//   document
-//     .querySelector("#cancelDelete")
-//     .addEventListener("click", (event) => canceldeleteArtist(event));
-// }
+    // console.log()
+  document.querySelector("#dialog-delete-artist").showModal();
+  document
+    .querySelector("#form-delete-artist")
+    .addEventListener("submit", () => deleteArtistConfirm(artistObject));
+  document
+    .querySelector("#cancelDelete")
+    .addEventListener("click", (event) => canceldeleteArtist(event));
+}
 
 function canceldeleteArtist(event) {
   event.preventDefault();
@@ -194,7 +194,7 @@ async function deleteArtistConfirm(artistObject) {
   if (response.ok) {
     await updateArtistsGrid();
     console.log("deleter");
-    // showDeleteFeedback();
+    showDeleteFeedback();
   } else {
     document.querySelector("#dialog-failed-to-update").showModal();
     console.log("fejl");
@@ -208,7 +208,7 @@ function showDeleteFeedback() {
 
   dialog.showModal();
 
-  setTimeout(dialog.close, 1000);
+  setTimeout(dialog.close, 3000);
 }
 
 function showCreateArtistDialog() {
@@ -265,7 +265,7 @@ function showartist(artistObject) {
 
   document
     .querySelector("#artists article:last-child .btn-delete")
-    .addEventListener("click", () => deleteArtistConfirm(artistObject));
+    .addEventListener("click", () => deleteArtistClicked(artistObject));
   document
     .querySelector("#artists article:last-child .btn-update")
     .addEventListener("click", () => updateClicked(artistObject));
@@ -302,17 +302,7 @@ function showartistModal(artistObject) {
     modal.close();
   });
 }
-// "id": 11,
-//   "name": "Jimi Hendrix",
-//   "birthdate": "1942-11-27",
-//   "activeSince": "1963-1970",
-//   "genres": ["Rock", "Blues"],
-//   "labels": ["Experience Hendrix", "Polydor Records"],
-//   "website": "https://www.jimihendrix.com/",
-//   "image": "https://example.com/jimi-hendrix.jpg",
-//   "shortDescription": "Guitar virtuoso and innovator.",
-//   "favorite": false
-//puts in data from from passes it to updateArtist
+
 
 function showErrorMessage(message) {
   document.querySelector(".error-message").textContent = message;
