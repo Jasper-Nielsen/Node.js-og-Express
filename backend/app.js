@@ -1,21 +1,22 @@
 import express from "express";
 import fs from "fs/promises";
 import cors from "cors";
+import { readFile } from "fs";
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/artists", async (req,res) => {
-    const data = await fs.readFile("artists.json");
-    const artists = JSON.parse(data);
+app.get("/artists", async (req, res) => {
+  const data = await fs.readFile("artists.json");
+  const artists = JSON.parse(data);
 
-    if(!artists){
-        return res.status(404).json({errror: "Artist list not found"})
-    }
-    return res.json(artists);
-})
+  if (!artists) {
+    return res.status(404).json({ errror: "Artist list not found" });
+  }
+  return res.json(artists);
+});
 
 // finder returner specifik artist på baggrund af id
 app.get("/artists/:id", async (req, res) => {
@@ -29,9 +30,9 @@ app.get("/artists/:id", async (req, res) => {
   const result = artists.find((artist) => artist.id === id); // finder specific artist på id
 
   if (!result) {
-    return res.status(404).json({ error: "Artist not found"});
+    return res.status(404).json({ error: "Artist not found" });
   }
-    return res.json(result); //giver specific artist som respons
+  return res.json(result); //giver specific artist som respons
 });
 
 app.post("/artists", async (req, res) => {
@@ -41,114 +42,116 @@ app.post("/artists", async (req, res) => {
   const data = await fs.readFile("artists.json");
   const artists = JSON.parse(data);
 
-  if(artists.includes(newMusician !== undefined)){
-    
-     res.status(404).json({ error: "artist already exist. Use update instead" });
-    
-  }else{
-   artists.push(newMusician);
-   await  fs.writeFile("artists.json", JSON.stringify(artists));
-    res.json(artists);
-  }
-  
+  console.log(artists);
 
- 
+  artists.push(newMusician);
+  await fs.writeFile("artists.json", JSON.stringify(artists));
+  res.json(artists);
+
+  //   for (let index = 0; index < artists.length; index++) {
+  //     const artist = artists[index];
+  //     console.log(`artist ${artist}`);
+  //     if (newMusician === artist) {
+  //       res
+  //         .status(404)
+  //         .json({ error: "artist already exist. Use update instead" });
+  //     } else {
+  //       artists.push(newMusician);
+  //       await fs.writeFile("artists.json", JSON.stringify(artists));
+  //       res.json(artists);
+  //     }
+  //   }
 });
 
 app.put("/artists/:id", async (req, res) => {
-  const id = Number(req.params.id);
-  console.log(`ID: ${id}`);
-
   const data = await fs.readFile("artists.json");
+
   const artists = JSON.parse(data);
-  const artistToUpdate = artists.find((artist) => artist.id === id);
 
-  if(!artistToUpdate){
-    res.status(404).json({error: "Artist not found. use create instead"});
-  }else {
-const body = req.body;
-console.log(`body ${body}`);
-artistToUpdate.name = body.name;
-artistToUpdate.birthdate = body.birthdate;
-artistToUpdate.activeSince = body.activeSince;
-artistToUpdate.genres = body.genres;
-artistToUpdate.labels = body.labels;
-artistToUpdate.website = body.website;
-artistToUpdate.image = body.image;
-artistToUpdate.shortDescription = body.shortDescription;
+  const id = Number(req.params.id);
 
-fs.writeFile("artists.json", JSON.stringify(artists));
-res.json(artists);
-  }
-  
-  
+  const newArtist = artists.filter(
+    (artist) => Number(artist.id) !== Number(id)
+  ); //alle undtagen den matchende. dvs laver kopi der udelader den fundne
+
+  newArtist.push(req.body); //det objekt du sender fra frontend til databasen som du vil have på listen istedet
+
+  await fs.writeFile("artists.json", JSON.stringify(newArtist));
+  res.json(newArtist);
 });
 
-app.patch("/artists:id", async (req,res) => {
-   
-    const id = Number(req.params.id);
+app.patch("/artists/:id", async (req, res) => {
+  const id = Number(req.params.id);
 
-    const artistList = await fs.readFile("artists.json")
+  const artistList = await fs.readFile("artists.json");
+  const artists = JSON.parse(artistList);
+  // const index = artists.findIndex((t = t.id === id)); //finding the artist object
 
-    const index = artistList.findIndex( t = t.id === id); //finding the artist object 
+  const artist = artists.find((artist) => artist.id === id);
+  if (artist.favorite === false) {
+    artist.favorite = true;
+  } else if (artist.favorite === true) {
+    artist.favorite = false;
+  }
 
-    if(!index){
-        res.status(404).json({error:"No artist with that id. Create artist before editing"})
-    } else{
-     
-    const newArtist = req.body;
+await  fs.writeFile("artists.json", JSON.stringify(artists));
 
-    const oldArtist = artistList.at(index);
+  res.json(artists);
 
-    if (newArtist !== undefined) {
-      oldArtist.name = newArtist.name;
-    }
-    if (newArtist !== undefined) {
-      oldArtist.birthdate = newArtist.birthdate;
-    }
-    if (newArtist !== undefined) {
-      oldArtist.activeSince = newArtist.activeSince;
-    }
-    if (newArtist !== undefined) {
-      oldArtist.genres = newArtist.genres;
-    }
+  //   if (!index) {
+  //     res
+  //       .status(404)
+  //       .json({ error: "No artist with that id. Create artist before editing" });
+  //   } else {
+  //     const newArtist = req.body;
 
-    if (newArtist !== undefined) {
-      oldArtist.labels = newArtist.labels;
-    }
-    if (newArtist !== undefined) {
-      oldArtist.website = newArtist.website;
-    }
-    if (newArtist !== undefined) {
-      oldArtist.image = newArtist.image;
-    }
-    if (newArtist !== undefined) {
-      oldArtist.shortDescription = newArtist.shortDescription;
-    }
+  //     const oldArtist = artistList.at(index);
 
-    res.json(artistList);   
-    }
-})
+  //     if (newArtist !== undefined) {
+  //       oldArtist.name = newArtist.name;
+  //     }
+  //     if (newArtist !== undefined) {
+  //       oldArtist.birthdate = newArtist.birthdate;
+  //     }
+  //     if (newArtist !== undefined) {
+  //       oldArtist.activeSince = newArtist.activeSince;
+  //     }
+  //     if (newArtist !== undefined) {
+  //       oldArtist.genres = newArtist.genres;
+  //     }
+
+  //     if (newArtist !== undefined) {
+  //       oldArtist.labels = newArtist.labels;
+  //     }
+  //     if (newArtist !== undefined) {
+  //       oldArtist.website = newArtist.website;
+  //     }
+  //     if (newArtist !== undefined) {
+  //       oldArtist.image = newArtist.image;
+  //     }
+  //     if (newArtist !== undefined) {
+  //       oldArtist.shortDescription = newArtist.shortDescription;
+  //     }
+  //     if (newArtist !== undefined) {
+  //       oldArtist.favorite = newArtist.favorite;
+  //     }
+});
 
 app.delete("/artists/:id", async (req, res) => {
-    const id = Number(req.params.id);
+  const data = await fs.readFile("artists.json");
 
-    const data = await fs.readFile("artists.json");
-    const artists = JSON.parse(data);
+  const artists = JSON.parse(data);
 
-    const newArtists = artists.filter(artist => artist.id !== id);
+  const id = Number(req.params.id);
 
-    await fs.writeFile("artists.json", JSON.stringify(newArtists));
+  const newArtist = artists.filter(
+    (artist) => Number(artist.id) !== Number(id)
+  ); //alle undtagen den matchende. dvs laver kopi der udelader den fundne
 
-    res.json(newArtists);
-    // if(!newArtists){
-    //     res.status(404).json({error: "can't delete artist as it is not in the database"});
-    // }else{
-
-    // }
-    
-})
+  await fs.writeFile("artists.json", JSON.stringify(newArtist));
+  res.json(newArtist);
+});
 
 app.listen(3000, () => {
-    console.log("server started on port 3000");
-})
+  console.log("server started on port 3000");
+});

@@ -3,8 +3,9 @@ import {
   createArtist,
   updateArtist,
   deleteArtist,
+  patchArtist,
 } from "./rest-service.js";
-import { filterByRace, sortByOption, searchByName } from "./helpers.js";
+import { filter, sortByOption, searchByName } from "./helpers.js";
 
 let artistList;
 
@@ -32,7 +33,7 @@ function initApp() {
     .addEventListener("submit", updateArtistClicked);
 
   document
-    .querySelector("#sortbyselect")
+    .querySelector("#sort-by-select")
     .addEventListener("change", (event) =>
       showArtists(sortByOption(event.target.value))
     );
@@ -47,9 +48,9 @@ function initApp() {
       showArtists(searchByName(event.target.value))
     );
   document
-    .querySelector("#filterby")
+    .querySelector("#filter")
     .addEventListener("change", (event) =>
-      showArtists(filterByRace(event.target.value))
+      showArtists(filter(event.target.value))
     );
 }
 
@@ -72,7 +73,7 @@ function updateClicked(artistObject) {
   //Feedback to the user
 
   updateForm.name.value = artistObject.name;
-  updateForm.image.value = artistObject.image; 
+  updateForm.image.value = artistObject.image;
   updateForm.birthdate.value = artistObject.birthdate;
   updateForm.activeSince.value = artistObject.activeSince;
   updateForm.genres.value = artistObject.genres;
@@ -101,42 +102,6 @@ async function createArtistClicked(event) {
   const labels = form.labels.value;
   const website = form.website.value;
   const shortDescription = form.shortDescription.value;
-  // const favorite = form.favorite.value;
-  /* <label for="name">Name
-          <input type="text" name="name" id="artist-name" placeholder="Input artist's name" size="50" required/>
-        </label>
-
-        <label for="image">Image <input type="url" name="image" id="image"placeholder="Input artist's image" size="50" required/>
-        </label>
-
-        <label for="birthDate">Date of Birth <input type="text" name="birthDate" id="birthDate" placeholder="Input artist's date of birth" size="50"/>
-        </label>
-
-        <label for="activeSince">Active Since <input type="text" name="activeSince" id="activeSince" placeholder="Input artist's active since" size="50"/>
-        </label>
-
-        <label for="genres">Genres <input type="text" name="genres" id="genres" placeholder="Input artist's genres" size="50"/>
-        </label>
-
-        <label for="labels">Labels <input type="text" name="labels" id="labels" placeholder="Input artist's labels" size="50"/>
-        </label>
-
-        <label for="website">Website <input type="text" name="website" id="website" placeholder="Input artist's website" size="50"/>
-        </label>
-
-        <label for="shortDescription">Short Description <input type="text" name="shortDescription" id="shortDescription" placeholder="Input artist's description" size="50"/>
-        </label>/
-  /*
-  "id": 10,
-    "name": "David Bowie",
-    "birthdate": "1947-01-08",
-    "activeSince": "1962-2016",
-    "genres": ["Rock", "Experimental"],
-    "labels": ["RCA Records", "Columbia Records"],
-    "website": "https://www.davidbowie.com/",
-    "image": "https://example.com/david-bowie.jpg",
-    "shortDescription": "Chameleon-like rock legend.",
-    "favorite": false */
 
   const response = await createArtist(
     name,
@@ -166,18 +131,16 @@ async function updateArtistClicked(event) {
   const form = document.querySelector("#form-update-artist");
   // extract the values from inputs in the form
   const name = form.name.value;
-  const image= form.image.value;
+  const image = form.image.value;
   const birthdate = form.birthdate.value;
   const activeSince = form.activeSince.value;
   const genres = form.genres.value;
   const labels = form.labels.value;
   const website = form.website.value;
   const shortDescription = form.shortDescription.value;
-  
+
   //gets the id of the post
   const id = form.getAttribute("data-id");
-
-
 
   const response = await updateArtist(
     id,
@@ -225,18 +188,21 @@ function canceldeleteArtist(event) {
 async function deleteArtistConfirm(artistObject) {
   const response = await deleteArtist(artistObject);
 
+  console.log(`delete clicked`);
   if (response.ok) {
     updateArtistsGrid();
-    showDeleteFeedback();
+    console.log("deleter")
+    // showDeleteFeedback();
   } else {
     document.querySelector("#dialog-failed-to-update").showModal();
+    console.log("fejl")
   }
 }
 
 function showDeleteFeedback() {
-  const dialog = document.querySelector("dialog-delete-feedback");
+  const dialog = document.querySelector("#dialog-delete-feedback");
 
-  document.querySelector("dialog-delete-feedback-message").textContent;
+  document.querySelector("#dialog-delete-feedback-message").textContent;
 
   dialog.showModal();
 
@@ -272,14 +238,15 @@ function showArtists(artistList) {
 function showartist(artistObject) {
   const html = /*html*/ `
         <article class="grid-item">
+
         <div class="clickable">    
             <img src="${artistObject.image}" />
             <h3><b>${artistObject.name}</b></h3>
-            <p>${artistObject.shortDescription}</p>
         </div>
-            <div class="btns">
+            <div id="btns-grid">
                 <button class="btn-delete">Delete</button>
                 <button class="btn-update">Update</button>
+                <button class="btn-favorite">Favorite</button>
                 
             </div>
         </article>
@@ -299,13 +266,23 @@ function showartist(artistObject) {
   document
     .querySelector("#artists article:last-child .btn-update")
     .addEventListener("click", () => updateClicked(artistObject));
+
+  document
+    .querySelector(".btn-favorite")
+    .addEventListener("click", () => toggleFavoriteArtist(artistObject));
+}
+
+function toggleFavoriteArtist(artistObject) {
+ 
+  patchArtist(artistObject);
 }
 
 function showartistModal(artistObject) {
   const modal = document.querySelector("#artist-modal");
   modal.querySelector("#artist-image").src = artistObject.image;
   modal.querySelector("#artist-name").textContent = artistObject.name;
-  modal.querySelector("#artist-active-since").textContent = artistObject.activeSince;
+  modal.querySelector("#artist-active-since").textContent =
+    artistObject.activeSince;
   modal.querySelector("#artist-genres").textContent = artistObject.genres;
   modal.querySelector("#artist-labels").textContent = artistObject.labels;
   modal.querySelector("#artist-website").textContent = artistObject.website;

@@ -1,339 +1,190 @@
-/* Set basic styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* ---------- root variables ---------- */
+:root {
+    --green: rgb(38, 76, 89);
+    --green-opacity: rgba(38, 76, 89, 0.2);
+    --light-green: rgb(94, 23, 87);
+    --light-grey: #f1f1f4;
+    --text-color-light: #f1f1f1;
+    --text-color-dark: #333;
+    --white: #fff;
+    --font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --text-color-out-of-stock: rgb(89, 38, 38);
+    --text-color-in-stock: rgb(172, 198, 201);
+}
+
+/* ---------- general styling ---------- */
+html {
+    color: var(--text-color-dark);
+    font-family: var(--font-family);
+    height: 100%;
+    width: 100%;
 }
 
 body {
-  font-family: Lucida Handwriting, cursive;
-  line-height: 1.6;
-  /* background-color: rgba(189, 184, 184, 0.5); */
-  background-image: url(https://p1.pxfuel.com/preview/467/227/718/middle-earth-lord-of-the-rings-gondor-map.jpg);
-  background-size: cover;
-  color: #fbc841;
+    margin: 0;
 }
 
-/* Header */
-
-header {
-  background-color: #A0522D;
-  color: #fbc841;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  max-height: 10vh;
-  padding: 1em;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9;
-}
-
-#search-error-msg{
-  background-color: #00000085;
-  text-align: center;
-}
-
-#input-search {
-  margin-top: -4rem;
-  margin-left: 15rem;
-  border: none;
-  border-bottom: 2px solid #333;
-  font-size: 1.2rem;
-}
-
-#btn-create-character {
-  margin-left: auto;
-  margin-right: auto;
-  height: 5vh;
-  background-color: #bdd076;
-  color: black;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+h1 {
+    font-size: 2em;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    text-align: center;
 }
 
 h2 {
-  font-size: 3rem;
-  margin: auto;
-  text-align: center;
-  margin-bottom: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
 }
-
-dialog {
-  color: #fbc841;
-  border: none;
-  border-radius: 10px;
-  background-color: #000000;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-}
-
-@media (min-width: 600px) {
-  .grid-container {
-    grid-template-columns: 1fr 1fr;
-  }
-  .grid-item {
-    width: 30vw;
-  }
-}
-
-@media (min-width: 1000px) {
-  .grid-container {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-  .grid-item {
-    width: 20vw;
-  }
-}
-
-@media (min-width: 1200px) {
-  .grid-container {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-  .grid-item {
-    width: 15vw;
-  }
-}
-
-.error-message {
-  background-color: rgb(255, 121, 121);
-  margin: 1em auto;
-  width: 100%;
-  max-width: 342px;
-  padding: 1em;
-}
-
-input:invalid {
-  border: 2px solid red;
-}
-
-input:valid {
-  border: 2px solid green;
-}
-
-.hide {
-  display: none;
-}
-
-html {
-  height: 100%;
-  width: 100%;
-}
-
-body {
-  margin: 0;
-  font-size: 1.2em;
-}
-
 
 h3 {
-  font-size: 2rem;
-  letter-spacing: 0.1px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
 }
 
-p {
-  font-size: 1.5rem;
+a {
+    cursor: pointer;
+    color: var(--green);
 }
 
+img {
+    width: 100%;
+    height: auto;
+}
+
+/* ---------- topbar styling ---------- */
+header {
+    background-color: var(--green);
+    color: var(--text-color-light);
+    padding: 13.5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+/* ---------- page styling ---------- */
+main {
+    /*min heigh is screen heigh minus height of tab and top bar */
+    min-height: calc(100vh - 110px);
+    background: var(--light-grey);
+    animation: fadeIn 0.4s;
+    padding: 108px 0 0;
+}
+
+/* ---------- animations ---------- */
+/* fade in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ---------- grid container styling ---------- */
 .grid-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1em;
-  padding: 1em;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    padding: 1em;
 }
 
 @media (min-width: 600px) {
-  .grid-container {
-    grid-template-columns: 1fr 1fr;
-  }
-  .grid-item {
-    width: 45vw;
-  }
+    .grid-container {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 @media (min-width: 992px) {
-  .grid-container {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-  .grid-item{
-    width: 30vw;
-  }
+    .grid-container {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 @media (min-width: 1200px) {
-  .grid-container {
+    .grid-container {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+.grid-container > article {
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+    padding: 1.5em;
+    background-color: var(--white);
+    transition: 0.5s;
+    animation: fadeIn 0.5s;
+}
+
+.grid-container > article:hover {
+    box-shadow: 0 8px 16px 0 var(--green);
+}
+
+.grid-container img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.grid-container p {
+    margin: 0.3em 0;
+}
+
+#btns-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.tools-grid{
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-  .grid-item {
-    width: 20vw;
-  }
-}
-
-/* ---------- grid item styling ---------- */
-
-.grid-item {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
-  padding: 1.5em;
-  position: relative;
-  height: 60vh;
-  margin: auto;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-
-.grid-item:hover {
-  box-shadow: 0 8px 16px 0 black;
-}
-
-.grid-item img {
-  width: 100%;
-  height: 10rem;
-  object-fit: contain;
-}
-
-.grid-item p {
-  margin: 0.3em 0;
-  padding: 0 0 0 0;
-}
-
-.grid-item h3:first-letter,
-.grid-item p:first-letter {
-  text-transform: uppercase;
 }
 
 /* ---------- buttons in grid container ---------- */
 
 .grid-container .btns {
-  padding: 1em 0 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1em;
-  position: absolute;
-  bottom: 1.5em;
-  left: 1.5em;
-  right: 1.5em;
+    padding: 1em 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
 }
 
 .grid-container .btns button {
-  width: 100%;
+    width: 100%;
 }
 
 /* ---------- form styling ---------- */
-/* input form styling */
+/* input form stryling */
 form {
-  margin: 2em auto 0;
-  padding: 1em 1em 2em;
-  text-align: center;
+    margin: 2em auto 0;
+    background-color: var(--light-green);
+    /* padding: 1em 1em 2em; */
+    text-align: center;
 }
 
 button {
-  font-weight: 300;
-  font-size: 1em;
-  text-align: center;
-  cursor: pointer;
-  border: 2px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 0.5em 1em;
-  width: 100%;
-  max-width: 380px;
-  background-color: #bdd076;
+    font-weight: 300;
+    font-size: 1em;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 0;
+    color: var(--text-color-light);
+    background-color: var(--green);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.5em 1em;
+    width: 100%;
+    max-width: 380px;
 }
 
-.btn-delete, .btn-cancel {
-  background-color: rgb(245, 123, 123);
-}
-
-header button {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
-}
-
-input {
-  margin: 1em auto;
-  width: 100%;
-  max-width: 350px;
-  padding: 1em;
-  border: 2px solid;
-  display: block;
-}
-
-.btn-cancel {
-  margin: 0 0 1em;
-}
-
-select {
-  border: none;
-  padding: 1em;
-  margin: 1em;
-  max-width: 350px;
-}
-
-/* ---------- dialog styling ---------- */
-
-dialog {
-  width: 65vw;
-  padding: 2em 1em;
-  margin: auto;
-}
-
-/* makes app background visible while dialog is open */
-dialog::backdrop {
-  background: rgba(92, 92, 92, 0.8);
-}
-
-dialog h3 {
-  text-align: center;
-}
-
-dialog h4 {
-  margin-bottom: 0;
-}
-
-dialog ul {
-  margin: 0.5em 0 1em;
-  padding-inline-start: 1.5em;
-}
-dialog p {
-  text-align: center;
-}
-
-#character-image {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  max-height: 40vh;
-}
-
-/* ---------- tools grid styling ---------- */
-
-.tools-grid {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
-  padding: 1.5em;
-  padding-top: 12vh;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1em;
-  justify-content: start;
-  justify-items: stretch;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-@media (min-width: 600px) {
-  .tools-grid {
-    grid-template-columns: auto auto;
-    margin: 1em;
-  }
-}
-
-.tools-grid input {
-  width: 350px;
-  max-width: 100%;
-  display: inline;
-}
-
-.tools-grid form {
-  padding: 0;
-  margin: 0;
+input, select {
+    margin: 1em auto;
+    width: 100%;
+    max-width: 350px;
+    padding: 1em;
+    border: 2px solid var(--green);
+    display: block;
+    background: var(--white);
 }

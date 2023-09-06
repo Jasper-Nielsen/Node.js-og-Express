@@ -45,7 +45,7 @@ async function createArtist(
   return response;
 }
 
-//  Updates an existing character
+
 async function updateArtist(
   id,
   name,
@@ -78,12 +78,24 @@ async function updateArtist(
   return response;
 }
 
-async function deleteArtist(artistObject) {
-  const id = artistObject.id;
+async function patchArtist(artistToUpdate){
+  
+  // PUT fetch request with JSON in the body. Calls the specific element in resource
   const response = await fetch(`${endpoint}/artists/${id}`, {
-    method: "DELETE",
+    method: "PATCH",
   });
   return response;
 }
 
-export { getArtists, createArtist, updateArtist, deleteArtist };
+async function deleteArtist(artistObject) {
+  const id = artistObject.id;
+
+  console.log(`artist ID : ${id}`)
+  const response = await fetch(`${endpoint}/artists/${id}`, {
+    method: "DELETE",
+  });
+  console.log(`response ${response}`);
+  return response;
+}
+
+export { getArtists, createArtist, updateArtist, deleteArtist, patchArtist };

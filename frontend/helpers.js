@@ -1,11 +1,10 @@
 import { artistList } from "./script.js";
 
-
 // why not just write artistList.lowerCase.includes(searchvalue)
 function searchByName(searchValue) {
   searchValue = searchValue.toLowerCase().trim();
-  return artistList.filter(
-    (char) => char.name.toLowerCase() === searchValue
+  return artistList.filter((char) =>
+    char.name.toLowerCase().includes(searchValue)
   );
 
   // function checkNames(character) {
@@ -16,19 +15,31 @@ function searchByName(searchValue) {
 function sortByOption(sortValue) {
   if (sortValue === "name") {
     return artistList.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sortValue === "title") {
-    return artistList.sort((a, b) => a.title.localeCompare(b.title));
-  } else if (sortValue === "race") {
-    return artistList.sort((a, b) => a.race.localeCompare(b.race));
-  }
+  } else if (sortValue === "birthdate") {
+    return artistList.sort((a, b) => a.birthdate - b.birthdate);
+  } 
 }
 
-function filterByRace(inputValue) {
+/* <option value="filterall">All</option>
+              <option value="pop">Pop</option>
+              <option value="hiphop">Hip Hop</option>
+              <option value="r&b">R&B</option>
+              <option value="dance">Dance</option>
+              <option value="favorite"=>Favorites</option></option> */
+
+function filter(inputValue) {
   inputValue = inputValue.toLowerCase();
+
+  let filteredList;
   if (inputValue !== "filterall") {
-    let filteredList = artistList.filter((artist) =>
-      artist.inputValue.toLowerCase().includes(inputValue)
-    );
+    if (inputValue === "pop") {
+      filteredList = artistList.filter((artist) =>
+        artist.genres.toLowerCase().includes(inputValue)
+      );
+    } else if(inputValue === "hiphop") {
+      filteredList = artistList.filter((artist) =>
+        artist.genres.toLowerCase().includes(inputValue)
+      )};
     if (filteredList.length !== 0) {
       return filteredList;
     } else {
@@ -50,4 +61,4 @@ function prepareData(dataObject) {
   return characterArray;
 }
 
-export { prepareData, filterByRace, sortByOption, searchByName };
+export { prepareData, filter, sortByOption, searchByName };

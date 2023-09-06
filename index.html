@@ -11,36 +11,41 @@
   <body>
     <header>
       <h3>Artists CRUD App</h3>        
-      <button id="btn-create-artist">Create artist</button>
-      <form id="searchbyname">
-        <input type="search" id="input-search" placeholder="Search by name">
-      </form>
-    </header>
-  <main>
-    <div class="tools-grid">
-        <label for="sortby">Sort by:        
-          <form id="sortby" name="sortby">
-            <select name="sortbyselect" id="sortbyselect">
+       <div class="tools-grid">
+      
+            
+         
+            <select name="sort-by-select" id="sort-by-select">
+              <option>Sort by</option>
               <option value="name">Name</option>
-              <option value="birthDate">Birth date</option>
-              <option value="website">Website</option>
+              <option value="birthdate">Birth date</option>
             </select>
-          </form>
-        </label>
+          
+        
 
-        <label for="filterby">Filter by:
-           <form id="filterby" name="filterby">
-            <select>
+        
+          
+            <select id="filter">
               <option value="filterall">All</option>
               <option value="pop">Pop</option>
               <option value="hiphop">Hip Hop</option>
               <option value="r&b">R&B</option>
               <option value="dance">Dance</option>
+              <option value="favorite"=>Favorites</option>
             </select>
-          </form>
-        </label>
+         
+       
+
+        <button id="btn-create-artist">Create artist</button>
+        
+      
+        <input type="search" id="input-search" placeholder="Search by name">
       </div>
 
+    </header>
+  <main>
+    
+   
         <h2>Artists</h2>
         <section id="artists" class="grid-container"></section>
 </main>
