@@ -39,6 +39,7 @@ app.get("/artists/:id", async (req, res) => {
 app.post("/artists", async (req, res) => {
   const newMusician = req.body;
   newMusician.id = new Date().getTime();
+  newMusician.favorite = false;
 
   const data = await fs.readFile("artists.json");
   const artists = JSON.parse(data);
@@ -84,14 +85,15 @@ app.patch("/artists/:id", async (req, res) => {
   const artistList = await fs.readFile("artists.json");
   const artists = JSON.parse(artistList);
 
-  const artist = artists.find((artist) => artist.id === id);
-  if (artist.favorite === false) {
-    artist.favorite = true;
-  } else if (artist.favorite === true) {
-    artist.favorite = false;
+  const result = artists.find((artist) => Number(artist.id) === id);
+  if (result.favorite === false) {
+    result.favorite = true;
+  } else if (result.favorite === true) {
+    result.favorite = false;
   }
+console.log(artists)
 
-  if (!artist) {
+  if (!result) {
     res.status(404).json({ error: "No artist found" });
   } else {
     await fs.writeFile("artists.json", JSON.stringify(artists));

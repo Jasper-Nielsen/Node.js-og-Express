@@ -5,7 +5,7 @@ import {
   deleteArtist,
   patchArtist,
 } from "./rest-service.js";
-import { filter, sortByOption, searchByName } from "./helpers.js";
+import { filter, filterFavorite, sortByOption, searchByName } from "./helpers.js";
 
 let artistList;
 
@@ -52,6 +52,8 @@ function initApp() {
     .addEventListener("change", (event) =>
       showArtists(filter(event.target.value))
     );
+
+    document.querySelector("#filterFavorite").addEventListener("change",(event) => showArtists(filterFavorite(event.target.value)));
 }
 
 function cancelCreate(event) {
@@ -112,7 +114,7 @@ async function createArtistClicked(event) {
     labels,
     website,
     shortDescription
-    // favorite
+    
   );
   if (response.ok) {
     document.querySelector("#dialog-create-artist").close();
@@ -269,7 +271,7 @@ function showartist(artistObject) {
     .addEventListener("click", () => updateClicked(artistObject));
 
   document
-    .querySelector(".btn-favorite")
+    .querySelector(" #artists article:last-child .btn-favorite")
     .addEventListener("click", () => toggleFavoriteArtist(artistObject));
 }
 

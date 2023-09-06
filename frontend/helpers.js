@@ -16,29 +16,30 @@ function sortByOption(sortValue) {
   if (sortValue === "name") {
     return artistList.sort((a, b) => a.name.localeCompare(b.name));
   } else if (sortValue === "birthdate") {
-    return artistList.sort((a, b) => a.birthdate - b.birthdate);
-  } 
+    return artistList.sort((a, b) => new Date(a.birthdate) - new Date(b.birthdate));
+  } else{return artistList}; 
 }
 
-/* <option value="filterall">All</option>
-              <option value="pop">Pop</option>
-              <option value="hiphop">Hip Hop</option>
-              <option value="r&b">R&B</option>
-              <option value="dance">Dance</option>
-              <option value="favorite"=>Favorites</option></option> */
 
 function filter(inputValue) {
-  inputValue = inputValue.toLowerCase();
+
 
   let filteredList;
   if (inputValue !== "filterall") {
-    if (inputValue === "pop") {
+    if (inputValue === "Pop") {
       filteredList = artistList.filter((artist) =>
-        artist.genres.toLowerCase().includes(inputValue)
+        artist.genres.includes(inputValue)
       );
-    } else if(inputValue === "hiphop") {
+    } else if(inputValue === "Hip-Hop") {
       filteredList = artistList.filter((artist) =>
-        artist.genres.toLowerCase().includes(inputValue)
+        artist.genres.includes(inputValue)
+      )}else if(inputValue === "R&B") {
+      filteredList = artistList.filter((artist) =>
+        artist.genres.includes(inputValue)
+      )}
+      else if(inputValue === "Jazz") {
+      filteredList = artistList.filter((artist) =>
+        artist.genres.includes(inputValue)
       )};
     if (filteredList.length !== 0) {
       return filteredList;
@@ -50,5 +51,18 @@ function filter(inputValue) {
   }
 }
 
+function filterFavorite(inputValue){
+  let filteredList;
+  if(inputValue !== "filterall" ){
+    if(inputValue === "favorite"){
+      filteredList = artistList.filter(artist=> artist.favorite === true);
+    } if(filteredList.length !== 0){
+      return filteredList;
+    } else return (filteredList = []);
+  } else {
+    return artistList;
+  }
+}
 
-export { filter, sortByOption, searchByName };
+
+export { filter, sortByOption, searchByName, filterFavorite };
