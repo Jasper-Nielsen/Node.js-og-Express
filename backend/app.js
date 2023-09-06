@@ -85,7 +85,6 @@ app.patch("/artists/:id", async (req, res) => {
 
   const artistList = await fs.readFile("artists.json");
   const artists = JSON.parse(artistList);
-  // const index = artists.findIndex((t = t.id === id)); //finding the artist object
 
   const artist = artists.find((artist) => artist.id === id);
   if (artist.favorite === false) {
@@ -94,47 +93,9 @@ app.patch("/artists/:id", async (req, res) => {
     artist.favorite = false;
   }
 
-await  fs.writeFile("artists.json", JSON.stringify(artists));
+  await fs.writeFile("artists.json", JSON.stringify(artists));
 
   res.json(artists);
-
-  //   if (!index) {
-  //     res
-  //       .status(404)
-  //       .json({ error: "No artist with that id. Create artist before editing" });
-  //   } else {
-  //     const newArtist = req.body;
-
-  //     const oldArtist = artistList.at(index);
-
-  //     if (newArtist !== undefined) {
-  //       oldArtist.name = newArtist.name;
-  //     }
-  //     if (newArtist !== undefined) {
-  //       oldArtist.birthdate = newArtist.birthdate;
-  //     }
-  //     if (newArtist !== undefined) {
-  //       oldArtist.activeSince = newArtist.activeSince;
-  //     }
-  //     if (newArtist !== undefined) {
-  //       oldArtist.genres = newArtist.genres;
-  //     }
-
-  //     if (newArtist !== undefined) {
-  //       oldArtist.labels = newArtist.labels;
-  //     }
-  //     if (newArtist !== undefined) {
-  //       oldArtist.website = newArtist.website;
-  //     }
-  //     if (newArtist !== undefined) {
-  //       oldArtist.image = newArtist.image;
-  //     }
-  //     if (newArtist !== undefined) {
-  //       oldArtist.shortDescription = newArtist.shortDescription;
-  //     }
-  //     if (newArtist !== undefined) {
-  //       oldArtist.favorite = newArtist.favorite;
-  //     }
 });
 
 app.delete("/artists/:id", async (req, res) => {
