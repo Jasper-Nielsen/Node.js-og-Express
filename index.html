@@ -97,9 +97,11 @@
         <label for="shortDescription">Short Description <input type="text" name="shortDescription" id="shortDescription" placeholder="Input artist's description" size="50"/>
         </label>
 
+        <div class="btn-cancel-confirm">
         <button class="btn-cancel">Close</button>
-        <p class="error-message hide">Error Message Placeholder</p>
-        <button>Create artist</button>
+        <button id="btn-dialog-create">Create artist</button>
+        </div>
+        
       </form>
   </div>
 </dialog>
@@ -109,9 +111,11 @@
         <h2>Do you want to delete an artist?</h2>
         <p id="dialog-delete-artist-title">Name of the artist</p>
         <form method="dialog" id="form-delete-artist">
+          <div class="btn-cancel-confirm">
         <button type="button" id="cancelDelete">No</button>
         <button id="confirmDelete">Yes</button>
-        </form>
+      </div>  
+      </form>
     </dialog>
 
   <dialog id="dialog-delete-feedback">
@@ -145,8 +149,11 @@
         <label for="shortDescription">Short Description</label>
         <input type="text" name="shortDescription" />
 
-        <button class="btn-cancel">Close</button>
+        <div class="btn-cancel-confirm">
+          <button class="btn-cancel">Close</button>
         <button class="btn-update">Update</button>
+        </div>
+        
       </form>
     </dialog>
 

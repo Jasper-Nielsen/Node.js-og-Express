@@ -250,12 +250,19 @@ function showartist(artistObject) {
                 <button class="btn-delete">Delete</button>
                 <button class="btn-update">Update</button>
                 <button class="btn-favorite">Favorite</button>
-                
             </div>
         </article>
     `;
 
+    
+
   document.querySelector("#artists").insertAdjacentHTML("beforeend", html);
+console.log(`artistStatus ${artistObject.favorite}`)
+ if (artistObject.favorite === true) {
+   document.querySelector(".btn-favorite").classList.add("favorite");
+ } else {
+   document.querySelector(".btn-favorite").classList.remove("favorite");
+ }
 
   document
     .querySelector("#artists article:last-child .clickable")
@@ -278,6 +285,9 @@ function showartist(artistObject) {
 async function toggleFavoriteArtist(artistObject) {
   const response = await patchArtist(artistObject.id);
 
+ 
+
+ 
   if (response.ok) {
     updateArtistsGrid();
   } else {
@@ -289,6 +299,7 @@ function showartistModal(artistObject) {
   const modal = document.querySelector("#artist-modal");
   modal.querySelector("#artist-image").src = artistObject.image;
   modal.querySelector("#artist-name").textContent = artistObject.name;
+    modal.querySelector("#artist-birth").textContent = artistObject.birthdate;
   modal.querySelector("#artist-active-since").textContent =
     artistObject.activeSince;
   modal.querySelector("#artist-genres").textContent = artistObject.genres;
@@ -296,7 +307,7 @@ function showartistModal(artistObject) {
   modal.querySelector("#artist-website").textContent = artistObject.website;
   modal.querySelector("#artist-description").textContent =
     artistObject.shortDescription;
-  // modal.querySelector("#artist-realm").textContent = artistObject.favorite;
+  
   modal.showModal();
   modal.querySelector("button").addEventListener("click", () => {
     modal.close();
