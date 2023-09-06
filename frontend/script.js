@@ -246,7 +246,7 @@ function showartist(artistObject) {
             <img src="${artistObject.image}" />
             <h3><b>${artistObject.name}</b></h3>
         </div>
-            <div id="btns-grid">
+            <div class="btns">
                 <button class="btn-delete">Delete</button>
                 <button class="btn-update">Update</button>
                 <button class="btn-favorite">Favorite</button>

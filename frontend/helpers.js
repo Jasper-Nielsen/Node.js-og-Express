@@ -6,10 +6,6 @@ function searchByName(searchValue) {
   return artistList.filter((char) =>
     char.name.toLowerCase().includes(searchValue)
   );
-
-  // function checkNames(character) {
-  //   return character.name.toLowerCase().includes(searchValue);
-  // }
 }
 
 function sortByOption(sortValue) {

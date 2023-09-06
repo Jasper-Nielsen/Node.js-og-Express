@@ -131,10 +131,7 @@ main {
     margin: 0.3em 0;
 }
 
-#btns-grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
+
 
 .tools-grid{
     display: grid;
@@ -146,7 +143,7 @@ main {
 .grid-container .btns {
     padding: 1em 0 0;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1em;
 }
 
