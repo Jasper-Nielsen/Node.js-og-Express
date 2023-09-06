@@ -272,9 +272,15 @@ function showartist(artistObject) {
     .addEventListener("click", () => toggleFavoriteArtist(artistObject));
 }
 
-function toggleFavoriteArtist(artistObject) {
- 
-  patchArtist(artistObject);
+async function toggleFavoriteArtist(artistObject) {
+ const response = await patchArtist(artistObject.id);
+
+ if(response.ok){
+  updateArtistsGrid();
+ } else{
+  console.log(response.status, response.statusText);
+ }
+
 }
 
 function showartistModal(artistObject) {

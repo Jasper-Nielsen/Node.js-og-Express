@@ -78,9 +78,7 @@ async function updateArtist(
   return response;
 }
 
-async function patchArtist(artistToUpdate){
-  
-  // PUT fetch request with JSON in the body. Calls the specific element in resource
+async function patchArtist(id){
   const response = await fetch(`${endpoint}/artists/${id}`, {
     method: "PATCH",
   });

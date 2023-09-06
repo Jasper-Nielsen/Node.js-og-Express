@@ -13,7 +13,7 @@ app.get("/artists", async (req, res) => {
   const artists = JSON.parse(data);
 
   if (!artists) {
-    return res.status(404).json({ errror: "Artist list not found" });
+    return res.status(404).json({ error: "Artist not found" });
   }
   return res.json(artists);
 });
@@ -30,9 +30,10 @@ app.get("/artists/:id", async (req, res) => {
   const result = artists.find((artist) => artist.id === id); // finder specific artist på id
 
   if (!result) {
-    return res.status(404).json({ error: "Artist not found" });
+    res.status(404).json({ error: "Artist not found" });
+  } else {
+    res.json(result); //giver specific artist som respons
   }
-  return res.json(result); //giver specific artist som respons
 });
 
 app.post("/artists", async (req, res) => {
@@ -45,22 +46,15 @@ app.post("/artists", async (req, res) => {
   console.log(artists);
 
   artists.push(newMusician);
-  await fs.writeFile("artists.json", JSON.stringify(artists));
-  res.json(artists);
 
-  //   for (let index = 0; index < artists.length; index++) {
-  //     const artist = artists[index];
-  //     console.log(`artist ${artist}`);
-  //     if (newMusician === artist) {
-  //       res
-  //         .status(404)
-  //         .json({ error: "artist already exist. Use update instead" });
-  //     } else {
-  //       artists.push(newMusician);
-  //       await fs.writeFile("artists.json", JSON.stringify(artists));
-  //       res.json(artists);
-  //     }
-  //   }
+  if (!newMusician) {
+    res
+      .status(400)
+      .json({ error: "No input received. Please write something" });
+  } else {
+    await fs.writeFile("artists.json", JSON.stringify(artists));
+    res.json(artists);
+  }
 });
 
 app.put("/artists/:id", async (req, res) => {
@@ -76,8 +70,12 @@ app.put("/artists/:id", async (req, res) => {
 
   newArtist.push(req.body); //det objekt du sender fra frontend til databasen som du vil have på listen istedet
 
-  await fs.writeFile("artists.json", JSON.stringify(newArtist));
-  res.json(newArtist);
+  if (newArtist === artists) {
+    res.status(404).json({ error: "No artist found" });
+  } else {
+    await fs.writeFile("artists.json", JSON.stringify(newArtist));
+    res.json(newArtist);
+  }
 });
 
 app.patch("/artists/:id", async (req, res) => {
@@ -93,9 +91,13 @@ app.patch("/artists/:id", async (req, res) => {
     artist.favorite = false;
   }
 
-  await fs.writeFile("artists.json", JSON.stringify(artists));
+  if (!artist) {
+    res.status(404).json({ error: "No artist found" });
+  } else {
+    await fs.writeFile("artists.json", JSON.stringify(artists));
 
-  res.json(artists);
+    res.json(artists);
+  }
 });
 
 app.delete("/artists/:id", async (req, res) => {
@@ -109,8 +111,12 @@ app.delete("/artists/:id", async (req, res) => {
     (artist) => Number(artist.id) !== Number(id)
   ); //alle undtagen den matchende. dvs laver kopi der udelader den fundne
 
-  await fs.writeFile("artists.json", JSON.stringify(newArtist));
-  res.json(newArtist);
+  if (!newArtist) {
+    res.status(404).json({ error: "No artist found" });
+  } else {
+    await fs.writeFile("artists.json", JSON.stringify(newArtist));
+    res.json(newArtist);
+  }
 });
 
 app.listen(3000, () => {
