@@ -2,23 +2,50 @@ import express from "express";
 import fs from "fs/promises";
 import cors from "cors";
 
-
 const app = express();
+
+const port = 3000;
 
 app.use(express.json());
 app.use(cors());
 
 
+//-------------backup
+// import express from "express";
+// import cors from "cors";
+// import fs from "fs/promises";
 
+// const app = express();
+// const port = 6000;
+
+// // Middleware
+// app.use(express.json());
+// app.use(cors());
+
+// app.get("/artists", getArtistsData);
+
+// export async function getArtists(path) {
+//   const data = await fs.readFile(path);
+//   return JSON.parse(String(data));
+// }
+
+// async function getArtistsData(req, res) {
+//   const artist = await getArtists("artists.json");
+//   res.json(artist);
+// }
+
+// app.listen(port, () => {
+//   console.log(`Server started on port http://localhost:${port}`);
+// });
 
 app.get("/artists", getAllArtists);
+
+// app.get("/artists", getArtistData);
 
 // finder returner specifik artist på baggrund af id
 app.get("/artists/:id", getArtist);
 
-
 app.post("/artists", postArtist);
-
 
 app.put("/artists/:id", updateArtist);
 
@@ -26,12 +53,25 @@ app.patch("/artists/:id", toggleFavorite);
 
 app.delete("/artists/:id", deleteArtist);
 
-
-
 //--------------------- evt export to other module??-------------
+
+// async function getArtistData(req, res) {
+//   const artist = await getArtist("artists.json");
+//   res.json(artist);
+// }
+
+// async function getArtist(path) {
+//   try {
+//     const data = await fs.readFile(path);
+//     return JSON.parse(String(data));
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+
 async function getAllArtists(req, res) {
   const artists = await readFileParseJson();
-  
+
   if (!artists) {
     res.status(404).json({ error: "Artist not found" });
   }
@@ -55,7 +95,7 @@ function addNewArtist(req, artists) {
 
   req.body.favorite = false;
 
- return  artists.push(req.body);
+  return artists.push(req.body);
 }
 
 function writeArtist(artists) {
@@ -64,6 +104,9 @@ function writeArtist(artists) {
 
 async function readFileParseJson() {
   return JSON.parse(await fs.readFile("artists.json"));
+
+  //   const data = await fs.readFile("artists.json");
+  //   return JSON.parse(data);
 }
 
 function findArtist(artists, id) {
@@ -106,14 +149,12 @@ async function toggleFavorite(req, res) {
   }
 }
 
- 
-
 async function updateArtist(req, res) {
   const artists = await readFileParseJson();
 
   const newArtistList = removeArtist(artists, Number(req.params.id)); //alle undtagen den matchende. dvs laver kopi der udelader den fundne
 
-  newArtistList.push(req.body); //det objekt du sender fra frontend til databasen som du vil have på listen istedet. 
+  newArtistList.push(req.body); //det objekt du sender fra frontend til databasen som du vil have på listen istedet.
 
   if (newArtistList === artists) {
     res.status(404).json({ error: "No artist found" });
@@ -145,6 +186,6 @@ function removeArtist(artists, id) {
   );
 }
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log("server started on port 3000");
 });

@@ -5,9 +5,14 @@ import {
   deleteArtist,
   patchArtist,
 } from "./rest-service.js";
-import { filter, filterFavorite, sortByOption, searchByName } from "./helpers.js";
+import {
+  filter,
+  filterFavorite,
+  sortByOption,
+  searchByName,
+} from "./helpers.js";
 
-let artistList;
+let artistList = [];
 
 window.addEventListener("load", initApp);
 
@@ -53,9 +58,12 @@ function initApp() {
       showArtists(filter(event.target.value))
     );
 
-    document.querySelector("#filterFavorite").addEventListener("change",(event) => showArtists(filterFavorite(event.target.value)));
+  document
+    .querySelector("#filterFavorite")
+    .addEventListener("change", (event) =>
+      showArtists(filterFavorite(event.target.value))
+    );
 }
-
 
 async function updateArtistsGrid() {
   artistList = await getArtists();
@@ -63,10 +71,8 @@ async function updateArtistsGrid() {
   showArtists(artistList);
 }
 
-
-
 function showArtists(artistList) {
-  // document.querySelector("#artists").innerHTML = "";
+  document.querySelector("#artists").innerHTML = "";
   if (artistList.length !== 0) {
     for (const artist of artistList) {
       showartist(artist);
@@ -86,7 +92,8 @@ function showartist(artistObject) {
         <article class="grid-item">
 
         <div class="clickable">    
-            <img src="${artistObject.image}" />
+            <img src="${artistObject.image}">
+
             <h3><b>${artistObject.name}</b></h3>
         </div>
             <div class="btns">
@@ -96,17 +103,20 @@ function showartist(artistObject) {
             </div>
         </article>
     `;
+            console.log(`image: ${artistObject.image}`);
+             console.log(`website: ${artistObject.website}`);
 
   document.querySelector("#artists").insertAdjacentHTML("beforeend", html);
   console.log(`artistStatus ${artistObject.favorite}`);
 
-//changes color and text on button upon clicked
+  //changes color and text on button upon clicked
   if (artistObject.favorite) {
     document
       .querySelector("#artists article:last-child .btn-favorite") // Jasper!! remember to add the specific selector #artists article:last-child
       .classList.add("favorite");
-      document.querySelector("#artists article:last-child .btn-favorite").textContent = "Unfavorite"
-
+    document.querySelector(
+      "#artists article:last-child .btn-favorite"
+    ).textContent = "Unfavorite";
   }
 
   // makes item clickable and runs showArtistModal
@@ -205,7 +215,6 @@ async function createArtistClicked(event) {
     labels,
     website,
     shortDescription
-    
   );
   if (response.ok) {
     document.querySelector("#dialog-create-artist").close();
@@ -250,7 +259,6 @@ async function updateArtistClicked(event) {
     document.querySelector("#dialog-update-artist").close();
     updateArtistsGrid();
     console.log("Update artist button clicked!");
-    
   } else {
     console.log(response.status, response.statusText);
     showErrorMessage("Something went wrong. Please try again");
@@ -259,12 +267,11 @@ async function updateArtistClicked(event) {
 }
 
 function deleteArtistClicked(artistObject) {
-
   console.log(artistObject);
   document.querySelector("#dialog-delete-artist-title").textContent =
     artistObject.name;
 
-    // console.log()
+  // console.log()
   document.querySelector("#dialog-delete-artist").showModal();
   document
     .querySelector("#form-delete-artist")
@@ -308,7 +315,6 @@ function showCreateArtistDialog() {
   console.log("Create New artist button clicked!");
 }
 
-
 async function toggleFavoriteArtist(artistObject) {
   const response = await patchArtist(artistObject.id);
 
@@ -318,9 +324,6 @@ async function toggleFavoriteArtist(artistObject) {
     console.log(response.status, response.statusText);
   }
 }
-
-
-
 
 function showErrorMessage(message) {
   document.querySelector(".error-message").textContent = message;
