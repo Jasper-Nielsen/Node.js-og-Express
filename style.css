@@ -21,11 +21,14 @@ html {
     font-family: var(--font-family);
     height: 100%;
     width: 100%;
-    background-image: url("images/image-1618855444EnH.jpg");
+    
 }
 
 body {
     margin: 0;
+    /* background-image: url("images/image-1618855444EnH.jpg");
+    background-size: cover; */
+   
     
 }
 
@@ -127,9 +130,7 @@ main {
     box-shadow: 0 8px 16px 0 var(--green);
 }
 
-.favorite{
-    background-color: var(--gold);
-}
+
 
 .grid-container img {
     width: 100%;
@@ -212,6 +213,15 @@ background-color: var(--light-green);
     background-color:grey;
 
 }
+
+
+/* .btn-favorite  {
+    background-color: var(--gold);
+} */
+
+.favorite{
+    background-color: gold;
+}  
 
 .btn-cancel{
     background-color: var(--ligtcoral);

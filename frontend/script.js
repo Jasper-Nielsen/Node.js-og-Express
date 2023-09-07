@@ -56,6 +56,94 @@ function initApp() {
     document.querySelector("#filterFavorite").addEventListener("change",(event) => showArtists(filterFavorite(event.target.value)));
 }
 
+
+async function updateArtistsGrid() {
+  artistList = await getArtists();
+  console.log(artistList);
+  showArtists(artistList);
+}
+
+
+
+function showArtists(artistList) {
+  document.querySelector("#artists").innerHTML = "";
+  if (artistList.length !== 0) {
+    for (const artist of artistList) {
+      showartist(artist);
+    }
+  } else {
+    document.querySelector("#artists").insertAdjacentHTML(
+      "beforeend",
+      /*html*/ `
+    <h2 id="search-error-msg"> No artists were found. Please try again.</h2>
+    `
+    );
+  }
+}
+
+function showartist(artistObject) {
+  const html = /*html*/ `
+        <article class="grid-item">
+
+        <div class="clickable">    
+            <img src="${artistObject.image}" />
+            <h3><b>${artistObject.name}</b></h3>
+        </div>
+            <div class="btns">
+                <button class="btn-delete">Delete</button>
+                <button class="btn-update">Update</button>
+                <button class="btn-favorite">Favorite</button>
+            </div>
+        </article>
+    `;
+
+  document.querySelector("#artists").insertAdjacentHTML("beforeend", html);
+  console.log(`artistStatus ${artistObject.favorite}`);
+
+
+  if (artistObject.favorite) {
+    document
+      .querySelector("#artists article:last-child .btn-favorite") // Jasper remember to add the specific selector #artists article:last-child
+      .classList.add("favorite");
+  }
+
+  document
+    .querySelector("#artists article:last-child .clickable")
+    .addEventListener("click", () => {
+      showartistModal(artistObject);
+    });
+
+  document
+    .querySelector("#artists article:last-child .btn-delete")
+    .addEventListener("click", () => deleteArtistClicked(artistObject));
+  document
+    .querySelector("#artists article:last-child .btn-update")
+    .addEventListener("click", () => updateClicked(artistObject));
+
+  document
+    .querySelector("#artists article:last-child .btn-favorite")
+    .addEventListener("click", () => toggleFavoriteArtist(artistObject));
+}
+
+function showartistModal(artistObject) {
+  const modal = document.querySelector("#artist-modal");
+  modal.querySelector("#artist-image").src = artistObject.image;
+  modal.querySelector("#artist-name").textContent = artistObject.name;
+  modal.querySelector("#artist-birth").textContent = artistObject.birthdate;
+  modal.querySelector("#artist-active-since").textContent =
+    artistObject.activeSince;
+  modal.querySelector("#artist-genres").textContent = artistObject.genres;
+  modal.querySelector("#artist-labels").textContent = artistObject.labels;
+  modal.querySelector("#artist-website").textContent = artistObject.website;
+  modal.querySelector("#artist-description").textContent =
+    artistObject.shortDescription;
+
+  modal.showModal();
+  modal.querySelector("button").addEventListener("click", () => {
+    modal.close();
+  });
+}
+
 function cancelCreate(event) {
   event.preventDefault();
   document.querySelector("#dialog-create-artist").close();
@@ -216,78 +304,10 @@ function showCreateArtistDialog() {
   console.log("Create New artist button clicked!");
 }
 
-async function updateArtistsGrid() {
-  artistList = await getArtists();
-  console.log(artistList);
-  showArtists(artistList);
-}
-
-function showArtists(artistList) {
-  document.querySelector("#artists").innerHTML = "";
-  if (artistList.length !== 0) {
-    for (const artist of artistList) {
-      showartist(artist);
-    }
-  } else {
-    document.querySelector("#artists").insertAdjacentHTML(
-      "beforeend",
-      /*html*/ `
-    <h2 id="search-error-msg"> No artists were found. Please try again.</h2>
-    `
-    );
-  }
-}
-
-function showartist(artistObject) {
-  const html = /*html*/ `
-        <article class="grid-item">
-
-        <div class="clickable">    
-            <img src="${artistObject.image}" />
-            <h3><b>${artistObject.name}</b></h3>
-        </div>
-            <div class="btns">
-                <button class="btn-delete">Delete</button>
-                <button class="btn-update">Update</button>
-                <button class="btn-favorite">Favorite</button>
-            </div>
-        </article>
-    `;
-
-    
-
-  document.querySelector("#artists").insertAdjacentHTML("beforeend", html);
-console.log(`artistStatus ${artistObject.favorite}`)
- if (artistObject.favorite === true) {
-   document.querySelector(".btn-favorite").classList.add("favorite");
- } else {
-   document.querySelector(".btn-favorite").classList.remove("favorite");
- }
-
-  document
-    .querySelector("#artists article:last-child .clickable")
-    .addEventListener("click", () => {
-      showartistModal(artistObject);
-    });
-
-  document
-    .querySelector("#artists article:last-child .btn-delete")
-    .addEventListener("click", () => deleteArtistClicked(artistObject));
-  document
-    .querySelector("#artists article:last-child .btn-update")
-    .addEventListener("click", () => updateClicked(artistObject));
-
-  document
-    .querySelector(" #artists article:last-child .btn-favorite")
-    .addEventListener("click", () => toggleFavoriteArtist(artistObject));
-}
 
 async function toggleFavoriteArtist(artistObject) {
   const response = await patchArtist(artistObject.id);
 
- 
-
- 
   if (response.ok) {
     updateArtistsGrid();
   } else {
@@ -295,24 +315,7 @@ async function toggleFavoriteArtist(artistObject) {
   }
 }
 
-function showartistModal(artistObject) {
-  const modal = document.querySelector("#artist-modal");
-  modal.querySelector("#artist-image").src = artistObject.image;
-  modal.querySelector("#artist-name").textContent = artistObject.name;
-    modal.querySelector("#artist-birth").textContent = artistObject.birthdate;
-  modal.querySelector("#artist-active-since").textContent =
-    artistObject.activeSince;
-  modal.querySelector("#artist-genres").textContent = artistObject.genres;
-  modal.querySelector("#artist-labels").textContent = artistObject.labels;
-  modal.querySelector("#artist-website").textContent = artistObject.website;
-  modal.querySelector("#artist-description").textContent =
-    artistObject.shortDescription;
-  
-  modal.showModal();
-  modal.querySelector("button").addEventListener("click", () => {
-    modal.close();
-  });
-}
+
 
 
 function showErrorMessage(message) {
