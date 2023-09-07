@@ -66,7 +66,7 @@ async function updateArtistsGrid() {
 
 
 function showArtists(artistList) {
-  document.querySelector("#artists").innerHTML = "";
+  // document.querySelector("#artists").innerHTML = "";
   if (artistList.length !== 0) {
     for (const artist of artistList) {
       showartist(artist);
@@ -250,6 +250,7 @@ async function updateArtistClicked(event) {
     document.querySelector("#dialog-update-artist").close();
     updateArtistsGrid();
     console.log("Update artist button clicked!");
+    
   } else {
     console.log(response.status, response.statusText);
     showErrorMessage("Something went wrong. Please try again");
@@ -299,7 +300,7 @@ function showDeleteFeedback() {
 
   dialog.showModal();
 
-  setTimeout(dialog.close, 3000);
+  setTimeout(dialog.close, 6000);
 }
 
 function showCreateArtistDialog() {
