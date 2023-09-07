@@ -100,17 +100,20 @@ function showartist(artistObject) {
   document.querySelector("#artists").insertAdjacentHTML("beforeend", html);
   console.log(`artistStatus ${artistObject.favorite}`);
 
-
+//changes color and text on button upon clicked
   if (artistObject.favorite) {
     document
-      .querySelector("#artists article:last-child .btn-favorite") // Jasper remember to add the specific selector #artists article:last-child
+      .querySelector("#artists article:last-child .btn-favorite") // Jasper!! remember to add the specific selector #artists article:last-child
       .classList.add("favorite");
+      document.querySelector("#artists article:last-child .btn-favorite").textContent = "Unfavorite"
+
   }
 
+  // makes item clickable and runs showArtistModal
   document
     .querySelector("#artists article:last-child .clickable")
     .addEventListener("click", () => {
-      showartistModal(artistObject);
+      showArtistModal(artistObject);
     });
 
   document
@@ -125,7 +128,7 @@ function showartist(artistObject) {
     .addEventListener("click", () => toggleFavoriteArtist(artistObject));
 }
 
-function showartistModal(artistObject) {
+function showArtistModal(artistObject) {
   const modal = document.querySelector("#artist-modal");
   modal.querySelector("#artist-image").src = artistObject.image;
   modal.querySelector("#artist-name").textContent = artistObject.name;

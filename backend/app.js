@@ -1,125 +1,149 @@
 import express from "express";
 import fs from "fs/promises";
 import cors from "cors";
-import { readFile } from "fs";
+
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/artists", async (req, res) => {
-  const data = await fs.readFile("artists.json");
-  const artists = JSON.parse(data);
 
-  if (!artists) {
-    return res.status(404).json({ error: "Artist not found" });
-  }
-  return res.json(artists);
-});
+
+
+app.get("/artists", getAllArtists);
 
 // finder returner specifik artist på baggrund af id
-app.get("/artists/:id", async (req, res) => {
-  //get req med respons
-  const id = Number(req.params.id); //finder id og gememr det i id
-  console.log(id);
-  const data = await fs.readFile(`artists.json`); // læser hele filen gemmer i data
+app.get("/artists/:id", getArtist);
 
-  const artists = JSON.parse(data); //laver data om til noget js kan håndtere
 
-  const result = artists.find((artist) => artist.id === id); // finder specific artist på id
+app.post("/artists", postArtist);
+
+
+app.put("/artists/:id", updateArtist);
+
+app.patch("/artists/:id", toggleFavorite);
+
+app.delete("/artists/:id", deleteArtist);
+
+
+
+//--------------------- evt export to other module??-------------
+async function getAllArtists(req, res) {
+  const artists = await readFileParseJson();
+  
+  if (!artists) {
+    res.status(404).json({ error: "Artist not found" });
+  }
+  res.json(artists);
+}
+
+async function getArtist(req, res) {
+  const artists = await readFileParseJson();
+
+  const result = findArtist(artists, Number(req.params.id));
 
   if (!result) {
     res.status(404).json({ error: "Artist not found" });
   } else {
-    res.json(result); //giver specific artist som respons
+    res.json(result);
   }
-});
+}
 
-app.post("/artists", async (req, res) => {
-  const newMusician = req.body;
-  newMusician.id = new Date().getTime();
-  newMusician.favorite = false;
+function addNewArtist(req, artists) {
+  req.body.id = new Date().getTime();
 
-  const data = await fs.readFile("artists.json");
-  const artists = JSON.parse(data);
+  req.body.favorite = false;
 
-  console.log(artists);
+ return  artists.push(req.body);
+}
 
-  artists.push(newMusician);
+function writeArtist(artists) {
+  fs.writeFile("artists.json", JSON.stringify(artists));
+}
 
-  if (!newMusician) {
+async function readFileParseJson() {
+  return JSON.parse(await fs.readFile("artists.json"));
+}
+
+function findArtist(artists, id) {
+  return artists.find((artist) => Number(artist.id) === id); // finder specific artist på id
+}
+
+async function postArtist(req, res) {
+  const artists = await readFileParseJson();
+
+  addNewArtist(req, artists);
+
+  if (!req.body) {
     res
       .status(400)
       .json({ error: "No input received. Please write something" });
   } else {
-    await fs.writeFile("artists.json", JSON.stringify(artists));
+    writeArtist(artists);
     res.json(artists);
   }
-});
+}
 
-app.put("/artists/:id", async (req, res) => {
-  const data = await fs.readFile("artists.json");
+async function toggleFavorite(req, res) {
+  const artists = await readFileParseJson();
 
-  const artists = JSON.parse(data);
+  const result = findArtist(artists, Number(req.params.id));
 
-  const id = Number(req.params.id);
+  result.favorite = !result.favorite; // samme som
 
-  const newArtist = artists.filter(
-    (artist) => Number(artist.id) !== Number(id)
-  ); //alle undtagen den matchende. dvs laver kopi der udelader den fundne
-
-  newArtist.push(req.body); //det objekt du sender fra frontend til databasen som du vil have på listen istedet
-
-  if (newArtist === artists) {
-    res.status(404).json({ error: "No artist found" });
-  } else {
-    await fs.writeFile("artists.json", JSON.stringify(newArtist));
-    res.json(newArtist);
-  }
-});
-
-app.patch("/artists/:id", async (req, res) => {
-  const id = Number(req.params.id);
-
-  const artistList = await fs.readFile("artists.json");
-  const artists = JSON.parse(artistList);
-
-  const result = artists.find((artist) => Number(artist.id) === id);
-  if (result.favorite === false) {
-    result.favorite = true;
-  } else if (result.favorite === true) {
-    result.favorite = false;
-  }
-console.log(artists)
-
+  // if (result.favorite === false) {
+  //   result.favorite = true;
+  // } else if (result.favorite === true) {
+  //   result.favorite = false;
+  // }
   if (!result) {
     res.status(404).json({ error: "No artist found" });
   } else {
-    await fs.writeFile("artists.json", JSON.stringify(artists));
+    fs.writeFile("artists.json", JSON.stringify(artists));
 
     res.json(artists);
   }
-});
+}
 
-app.delete("/artists/:id", async (req, res) => {
-  const data = await fs.readFile("artists.json");
+ 
 
-  const artists = JSON.parse(data);
+async function updateArtist(req, res) {
+  const artists = await readFileParseJson();
+
+  const newArtistList = removeArtist(artists, Number(req.params.id)); //alle undtagen den matchende. dvs laver kopi der udelader den fundne
+
+  newArtistList.push(req.body); //det objekt du sender fra frontend til databasen som du vil have på listen istedet. 
+
+  if (newArtistList === artists) {
+    res.status(404).json({ error: "No artist found" });
+  } else {
+    writeArtist(newArtistList);
+
+    res.json(newArtistList);
+  }
+}
+
+async function deleteArtist(req, res) {
+  const artists = await readFileParseJson();
 
   const id = Number(req.params.id);
 
-  const newArtist = artists.filter(
-    (artist) => Number(artist.id) !== Number(id)
-  ); //alle undtagen den matchende. dvs laver kopi der udelader den fundne
+  const newArtist = removeArtist(artists, id);
 
   if (!newArtist) {
     res.status(404).json({ error: "No artist found" });
   } else {
-    await fs.writeFile("artists.json", JSON.stringify(newArtist));
+    fs.writeFile("artists.json", JSON.stringify(newArtist));
     res.json(newArtist);
   }
-});
+}
+
+function removeArtist(artists, id) {
+  return artists.filter(
+    (artist) => Number(artist.id) !== id // //alle undtagen den matchende. dvs laver kopi der udelader den fundne
+  );
+}
 
 app.listen(3000, () => {
   console.log("server started on port 3000");

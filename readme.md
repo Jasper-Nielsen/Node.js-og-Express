@@ -12,6 +12,6 @@ Få API'en startet
 I terminalen skriv node app.js.
 
 Se appen
-Højre klik på script.js i frondend mappen.
+Højre klik på index.html i frondend mappen og vælg  "open with Live server"
 
 

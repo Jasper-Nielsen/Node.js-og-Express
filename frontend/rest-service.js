@@ -83,12 +83,10 @@ async function patchArtist(id) {
 async function deleteArtist(artistObject) {
   const id = artistObject.id;
 
-  console.log(`artist ID : ${id}`);
   const response = await fetch(`${endpoint}/artists/${id}`, {
     method: "DELETE",
   });
-  console.log(`response ${response}`);
-  console.log(response);
+ 
   return response;
 }
 

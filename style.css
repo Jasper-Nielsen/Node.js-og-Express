@@ -21,15 +21,11 @@ html {
     font-family: var(--font-family);
     height: 100%;
     width: 100%;
-    
+
 }
 
 body {
     margin: 0;
-    /* background-image: url("images/image-1618855444EnH.jpg");
-    background-size: cover; */
-   
-    
 }
 
 h1 {
@@ -62,7 +58,9 @@ img {
 
 /* ---------- topbar styling ---------- */
 header {
-    background-color: var(--green);
+    /* background-color: var(--green); */
+    background-image: url("images/image-1618855444EnH.jpg");
+    background-size: cover; 
     color: var(--text-color-light);
     padding: 13.5px;
     position: fixed;
@@ -79,6 +77,7 @@ main {
     background: var(--light-grey);
     animation: fadeIn 0.4s;
     padding: 108px 0 0;
+    /* background-image: url("https://www.publicdomainpictures.net/pictures/400000/nahled/image-1618855686NGN.jpg") */
 }
 
 /* ---------- animations ---------- */
@@ -112,11 +111,11 @@ main {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
     .grid-container {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
-}
+} */
 
 .grid-container > article {
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
@@ -151,6 +150,13 @@ main {
 }
 
 /* ---------- buttons in grid container ---------- */
+
+
+
+article{
+    background-image: url("https://www.publicdomainpictures.net/pictures/160000/nahled/notes-de-musique-qui-dansent.jpg");
+    color:cornsilk;
+}
 
 .grid-container .btns {
     padding: 1em 0 0;
@@ -214,11 +220,7 @@ background-color: var(--light-green);
 
 }
 
-
-/* .btn-favorite  {
-    background-color: var(--gold);
-} */
-
+/*used to make btn gold when favorited*/
 .favorite{
     background-color: gold;
 }  
