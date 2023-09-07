@@ -77,7 +77,7 @@ async function patchArtist(id) {
   const response = await fetch(`${endpoint}/artists/${id}`, {
     method: "PATCH",
   });
-  return response;
+  return response; 
 }
 
 async function deleteArtist(artistObject) {
