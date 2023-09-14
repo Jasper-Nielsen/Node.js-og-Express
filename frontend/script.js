@@ -6,10 +6,10 @@ import {
   patchArtist,
 } from "./rest-service.js";
 import {
-  filter,
-  filterFavorite,
+  filterByGenre,
   sortByOption,
   searchByName,
+  filterFavorites,
 } from "./helpers.js";
 
 let artistList = [];
@@ -17,7 +17,14 @@ let artistList = [];
 window.addEventListener("load", initApp);
 
 function initApp() {
-  updateArtistsGrid();
+  fetchArtists();
+
+
+  document.querySelector("#sort-by-select").dataset.filterValue = "";
+  document.querySelector("#filter").dataset.filterValue = "";
+  document.querySelector("#filterFavorite").dataset.filterValue = "";
+
+
   document
     .querySelector("#btn-create-artist")
     .addEventListener("click", showCreateArtistDialog);
@@ -37,11 +44,24 @@ function initApp() {
     .querySelector("#form-update-artist")
     .addEventListener("submit", updateArtistClicked);
 
-  document
-    .querySelector("#sort-by-select")
-    .addEventListener("change", (event) =>
-      showArtists(sortByOption(event.target.value))
-    );
+
+
+
+     document
+       .querySelector("#sort-by-select")
+       .addEventListener("change", (event) =>{
+        document.querySelector("#sort-by-select").dataset.filterValue =
+          event.target.value;
+        fetchArtists();
+       }
+         
+       );
+
+  // document
+  //   .querySelector("#sort-by-select")
+  //   .addEventListener("change", (event) =>
+  //     showArtists(sortByOption(event.target.value))
+  //   );
   document
     .querySelector("#input-search")
     .addEventListener("keyup", (event) =>
@@ -54,37 +74,53 @@ function initApp() {
     );
   document
     .querySelector("#filter")
-    .addEventListener("change", (event) =>
-      showArtists(filter(event.target.value))
+    .addEventListener("change", (event) =>{
+      document.querySelector("#filter").dataset.filterValue = event.target.value;
+      fetchArtists()
+    }
     );
 
   document
     .querySelector("#filterFavorite")
-    .addEventListener("change", (event) =>
-      showArtists(filterFavorite(event.target.value))
+    .addEventListener("change", (event) =>{
+       document.querySelector("#filterFavorite").dataset.filterValue = event.target.value;
+       fetchArtists()
+    }
+     
     );
 }
 
-function fetchArtistGrid(){
-  const now = new Date.getTime();
-  let lastTime;
-  if(now - lastTime >= 90000 || artistList.length === 0){
-    artistList = getArtists();
-
-
+// ------------------------ Emil Nissen tiltag---------------------------------//
+//kun  hent hvis now - then > 90000 eller artistList.length === 0;
+async function fetchArtists() {
+  const now = new Date().getTime();
+  let then;
+  if (now - then >= 90000 || artistList.length === 0) {
+    then = new Date().getTime();
+    artistList = await getArtists();
+    refreshArtistsGrid();
   }
+  else {refreshArtistsGrid();}
 }
 
-// function 
-
-async function updateArtistsGrid() {
-  artistList = await getArtists();
-  console.log(artistList);
-  showArtists(artistList);
+function refreshArtistsGrid() {
+  //først sorter liste send videre
+ const favoriteList = filterFavorites(artistList);
+  const filteredList = filterByGenre(favoriteList);
+  const sortedList = sortByOption(filteredList);
+   showArtists(sortedList);
 }
+
+// ------------------------ slut ---------------------------------//
+
+// async function updateArtistsGrid() {
+//   artistList = await getArtists();
+//   console.log(artistList);
+//   showArtists(artistList);
+// }
 
 function showArtists(artistList) {
-  // document.querySelector("#artists").innerHTML = "";
+  document.querySelector("#artists").innerHTML = "";
   if (artistList.length !== 0) {
     for (const artist of artistList) {
       showartist(artist);
@@ -115,14 +151,13 @@ function showartist(artistObject) {
             </div>
         </article>
     `;
-            console.log(`image: ${artistObject.image}`);
-             console.log(`website: ${artistObject.website}`);
+  
 
   document.querySelector("#artists").insertAdjacentHTML("beforeend", html);
   console.log(`artistStatus ${artistObject.favorite}`);
 
   //changes color and text on button upon clicked
-  if (artistObject.favorite) {
+  if (getFavorite(artistObject.id)) {
     document
       .querySelector("#artists article:last-child .btn-favorite") // Jasper!! remember to add the specific selector #artists article:last-child
       .classList.add("favorite");
@@ -147,7 +182,30 @@ function showartist(artistObject) {
 
   document
     .querySelector("#artists article:last-child .btn-favorite")
-    .addEventListener("click", () => toggleFavoriteArtist(artistObject));
+    .addEventListener("click", () => artistFavoriteClik(artistObject));
+}
+
+
+function getFavorite(id){
+  //checks if artist id exists as a key in localstorage which currently is only used for tracking favorites
+    // find better solution later!!
+  if (id in localStorage){
+    return true;
+  } else{
+    return false;
+  }
+}
+
+async function artistFavoriteClik(artistObject){
+  // checks if the artist has already been favorited
+  // if it has, it will be removed if it hasn't it wil be added
+
+  if (getFavorite(artistObject.id)) {
+    localStorage.removeItem(artistObject.id);
+  } else {
+    localStorage.setItem(artistObject.id, true);
+  }
+  refreshArtistsGrid();
 }
 
 function showArtistModal(artistObject) {
@@ -337,14 +395,5 @@ async function toggleFavoriteArtist(artistObject) {
   }
 }
 
-function showErrorMessage(message) {
-  document.querySelector(".error-message").textContent = message;
-  document.querySelector(".error-message").classList.remove("hide");
-}
-
-function hideErrorMessage() {
-  document.querySelector(".error-message").textContent = "";
-  document.querySelector(".error-message").classList.add("hide");
-}
 
 export { artistList };
