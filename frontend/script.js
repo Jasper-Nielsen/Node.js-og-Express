@@ -65,6 +65,18 @@ function initApp() {
     );
 }
 
+function fetchArtistGrid(){
+  const now = new Date.getTime();
+  let lastTime;
+  if(now - lastTime >= 90000 || artistList.length === 0){
+    artistList = getArtists();
+
+
+  }
+}
+
+// function 
+
 async function updateArtistsGrid() {
   artistList = await getArtists();
   console.log(artistList);
@@ -72,7 +84,7 @@ async function updateArtistsGrid() {
 }
 
 function showArtists(artistList) {
-  document.querySelector("#artists").innerHTML = "";
+  // document.querySelector("#artists").innerHTML = "";
   if (artistList.length !== 0) {
     for (const artist of artistList) {
       showartist(artist);
